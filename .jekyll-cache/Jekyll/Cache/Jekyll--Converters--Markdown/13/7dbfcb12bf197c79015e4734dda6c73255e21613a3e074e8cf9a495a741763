@@ -1,0 +1,83 @@
+I"�<h1 id="python-tips">python tips</h1>
+
+<h3 id="func-enumerate">func: enumerate</h3>
+
+<p>描述：enumerate() 函数用于将一个可遍历的数据对象(如列表、元组或字符串)组合为一个索引序列，同时列出数据和数据下标。</p>
+
+<p>函数结构：<code class="language-plaintext highlighter-rouge">enumerate(sequence, [start=0])</code>，其中start是下标其实位置，sequence表示可迭代对象。</p>
+
+<h3 id="dictget">dict.get()</h3>
+
+<p>描述：不同于对字典的直接访问，<code class="language-plaintext highlighter-rouge">dict.get()</code>函数返回指定键的值，不在字典中则会返回默认值，和<code class="language-plaintext highlighter-rouge">collections.defaultdict()</code>的效果一样。</p>
+
+<p>函数结构: <code class="language-plaintext highlighter-rouge">dict.get(key, default=None)</code>，其中default代表找不到键时的默认返回对象。</p>
+
+<h3 id="dictsetdefault">dict.setdefault()</h3>
+
+<p>描述：和<code class="language-plaintext highlighter-rouge">get()</code>返回默认值不同，如果键不存在于字典中，<code class="language-plaintext highlighter-rouge">setdefault()</code>方法会添加键并将其设置为默认值。</p>
+
+<h3 id="list">list</h3>
+
+<p>（1）<code class="language-plaintext highlighter-rouge">[]==None </code>的结果是False，所以可以用<code class="language-plaintext highlighter-rouge">len(arr)</code>判定。</p>
+
+<p>（2）可以对数组直接进行<code class="language-plaintext highlighter-rouge">+</code>运算来扩充数组，即<code class="language-plaintext highlighter-rouge">[1,2]+[3,4]=[1,2,3,4]</code></p>
+
+<p>（3）列表可以直接判定相等，即<code class="language-plaintext highlighter-rouge">[1,2,3]==[1,2,3]</code>的结果为<code class="language-plaintext highlighter-rouge">True</code></p>
+
+<h3 id="func-all">func: all()</h3>
+
+<p>描述：<code class="language-plaintext highlighter-rouge">all()</code>函数用于判定给定可迭代参数iterable中的所有元素是否都为True。</p>
+
+<h3 id="关于in的时间复杂度">关于in的时间复杂度</h3>
+
+<p>所以能用hash表来判断的话最好，哈希表的时间复杂度还是比较低的。</p>
+
+<p>python 字典底层是hash的，用in是$O(1)$</p>
+
+<p>而普通的in是$O(n)$</p>
+
+<p>对字典来说，<code class="language-plaintext highlighter-rouge">x in dict</code>, 其实类同于<code class="language-plaintext highlighter-rouge">x in dict.keys()</code>，就是对键进行查询。</p>
+
+<h3 id="isdigit函数判定"><strong>isdigit函数判定</strong></h3>
+
+<p>有<code class="language-plaintext highlighter-rouge">isdigit()</code>函数和<code class="language-plaintext highlighter-rouge">isalpha()</code>函数，以及<code class="language-plaintext highlighter-rouge">isalnum()</code>函数。</p>
+
+<p>之后还有<code class="language-plaintext highlighter-rouge">islower()</code>、<code class="language-plaintext highlighter-rouge">isnumeric()</code>、<code class="language-plaintext highlighter-rouge">isupper()</code>、<code class="language-plaintext highlighter-rouge">isTitle()</code>，都是用来判定字符串的组成。</p>
+
+<h3 id="join函数">join()函数</h3>
+
+<p><code class="language-plaintext highlighter-rouge">str.join(sequence)</code>就是将序列添加到字符串中。</p>
+
+<h3 id="os模块">OS模块</h3>
+
+<p>具体的os模块的解释，可以看<a href="https://www.runoob.com/python/os-file-methods.html">链接</a></p>
+
+<p>常用的：</p>
+
+<p><code class="language-plaintext highlighter-rouge">os.getcwd()</code>：放回当前工作目录</p>
+
+<p><code class="language-plaintext highlighter-rouge">os.listdir()</code>：返回path指定的文件夹包含的文件或者文件夹的名字的列表。</p>
+
+<p><code class="language-plaintext highlighter-rouge">os.makedir(path)</code>：以创建一个名为path的文件夹。</p>
+
+<p><code class="language-plaintext highlighter-rouge">os.open()</code>：打开一个文件，并且设置需要的打开选项。</p>
+
+<p><code class="language-plaintext highlighter-rouge">os.path()</code>：获取文件的属性信息。</p>
+
+<h3 id="递归的时间复杂度"><strong>递归的时间复杂度</strong></h3>
+
+<p>若算法执行所需要的辅助空间相对于输入数据n而言是一个常数，则称这个算法空间复杂度辅助空间为$O(1)$；</p>
+
+<p>递归算法空间复杂度：递归深度$n$乘以每次递归所要的辅助空间，如果每次递归所需要的辅助空间为常数，则递归空间复杂度$O(n)$。</p>
+
+<p>递归用的栈的思想。</p>
+
+<h3 id="ordchr">ord()/chr()</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span><span class="k">print</span> <span class="nb">chr</span><span class="p">(</span><span class="mh">0x30</span><span class="p">),</span> <span class="nb">chr</span><span class="p">(</span><span class="mh">0x31</span><span class="p">),</span> <span class="nb">chr</span><span class="p">(</span><span class="mh">0x61</span><span class="p">)</span>   <span class="c1"># 十六进制
+</span><span class="mi">0</span> <span class="mi">1</span> <span class="n">a</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="nb">chr</span><span class="p">(</span><span class="mi">48</span><span class="p">),</span> <span class="nb">chr</span><span class="p">(</span><span class="mi">49</span><span class="p">),</span> <span class="nb">chr</span><span class="p">(</span><span class="mi">97</span><span class="p">)</span>         <span class="c1"># 十进制
+</span><span class="mi">0</span> <span class="mi">1</span> <span class="n">a</span>
+</code></pre></div></div>
+
+:ET

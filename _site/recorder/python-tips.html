@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>
+    
+      Python small tips memo &middot; My thoughts
+    
+  </title>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="/assets/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/assets/font-awesome/css/font-awesome.min.css">
+  <!-- My CSS -->
+  <link rel="stylesheet" href="/assets/main.css">
+
+  <link rel="shortcut icon" href="/img/favicon.ico">
+
+  <!-- MathJax -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      TeX: {
+        equationNumbers: {
+          autoNumber: "AMS"
+        }
+      },
+      tex2jax: {
+        inlineMath: [ ['$','$'] ],
+        displayMath: [ ['$$','$$'] ],
+        processEscapes: true,
+      }
+    });
+  </script>
+  
+
+  <!-- code highlighting-->
+  <link rel="stylesheet" href="/lib/highlight/styles/hybrid.css">
+  <script src="/lib/highlight/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script>hljs.configure({ ignore: ['text'] });</script>
+  
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+    <header class="header">
+  <!-- Navigation -->
+  <nav class="navbar navbar-default .navbar-static-top">
+    <div class="container">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/" style="color:#333">My thoughts</a>
+        <p class="navbar-text">Intuitions are better than theories with enough proficiency.</p>
+      </div>
+
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+          <li class="nav-search">
+            <form class="navbar-form navbar-left" role="search" id="search-form">
+              <div class="input-group">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit" style="color:#777">Go!</button>
+                  </span>
+                  <input type="text" id="search-input" class="form-control" placeholder="Search">
+                  
+              </div>
+            </form>
+          </li>
+          <li>
+            <a href="/archives.html">Archives</a>
+          </li>
+          <li>
+            <a href="/categories.html">Categories</a>
+          </li>
+          <li>
+            <a href="/tags.html">Tags</a>
+          </li>
+          <li>
+            <a href="/about.html">About</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+  
+    <div class="container">
+  <div class="row-fluid main">
+    <div class="col-md-9 content">
+      <article class="post">
+        <h1 class="post-title">Python small tips memo</h1>
+
+        <div class="post-info">
+          <span class="post-date">03 Jun 2020</span>
+           | 
+            <span class="fa fa-folder-open" aria-hidden="true">
+            
+              <a class="post-categories" href="/categories.html#recorder">recorder</a>
+            
+            </span>
+          
+           | 
+            <span class="fa fa-tag" aria-hidden="true">
+            
+              <a class="post-tags" href="/tags.html#Python">Python</a>
+            
+            </span>
+          
+        </div>
+
+        <hr>
+        <div class="post-content">
+          <h1 id="python-tips">python tips</h1>
+
+<h3 id="func-enumerate">func: enumerate</h3>
+
+<p>描述：enumerate() 函数用于将一个可遍历的数据对象(如列表、元组或字符串)组合为一个索引序列，同时列出数据和数据下标。</p>
+
+<p>函数结构：<code class="language-plaintext highlighter-rouge">enumerate(sequence, [start=0])</code>，其中start是下标其实位置，sequence表示可迭代对象。</p>
+
+<h3 id="dictget">dict.get()</h3>
+
+<p>描述：不同于对字典的直接访问，<code class="language-plaintext highlighter-rouge">dict.get()</code>函数返回指定键的值，不在字典中则会返回默认值，和<code class="language-plaintext highlighter-rouge">collections.defaultdict()</code>的效果一样。</p>
+
+<p>函数结构: <code class="language-plaintext highlighter-rouge">dict.get(key, default=None)</code>，其中default代表找不到键时的默认返回对象。</p>
+
+<h3 id="dictsetdefault">dict.setdefault()</h3>
+
+<p>描述：和<code class="language-plaintext highlighter-rouge">get()</code>返回默认值不同，如果键不存在于字典中，<code class="language-plaintext highlighter-rouge">setdefault()</code>方法会添加键并将其设置为默认值。</p>
+
+<h3 id="list">list</h3>
+
+<p>（1）<code class="language-plaintext highlighter-rouge">[]==None </code>的结果是False，所以可以用<code class="language-plaintext highlighter-rouge">len(arr)</code>判定。</p>
+
+<p>（2）可以对数组直接进行<code class="language-plaintext highlighter-rouge">+</code>运算来扩充数组，即<code class="language-plaintext highlighter-rouge">[1,2]+[3,4]=[1,2,3,4]</code></p>
+
+<p>（3）列表可以直接判定相等，即<code class="language-plaintext highlighter-rouge">[1,2,3]==[1,2,3]</code>的结果为<code class="language-plaintext highlighter-rouge">True</code></p>
+
+<h3 id="func-all">func: all()</h3>
+
+<p>描述：<code class="language-plaintext highlighter-rouge">all()</code>函数用于判定给定可迭代参数iterable中的所有元素是否都为True。</p>
+
+<h3 id="关于in的时间复杂度">关于in的时间复杂度</h3>
+
+<p>所以能用hash表来判断的话最好，哈希表的时间复杂度还是比较低的。</p>
+
+<p>python 字典底层是hash的，用in是$O(1)$</p>
+
+<p>而普通的in是$O(n)$</p>
+
+<p>对字典来说，<code class="language-plaintext highlighter-rouge">x in dict</code>, 其实类同于<code class="language-plaintext highlighter-rouge">x in dict.keys()</code>，就是对键进行查询。</p>
+
+<h3 id="isdigit函数判定"><strong>isdigit函数判定</strong></h3>
+
+<p>有<code class="language-plaintext highlighter-rouge">isdigit()</code>函数和<code class="language-plaintext highlighter-rouge">isalpha()</code>函数，以及<code class="language-plaintext highlighter-rouge">isalnum()</code>函数。</p>
+
+<p>之后还有<code class="language-plaintext highlighter-rouge">islower()</code>、<code class="language-plaintext highlighter-rouge">isnumeric()</code>、<code class="language-plaintext highlighter-rouge">isupper()</code>、<code class="language-plaintext highlighter-rouge">isTitle()</code>，都是用来判定字符串的组成。</p>
+
+<h3 id="join函数">join()函数</h3>
+
+<p><code class="language-plaintext highlighter-rouge">str.join(sequence)</code>就是将序列添加到字符串中。</p>
+
+<h3 id="os模块">OS模块</h3>
+
+<p>具体的os模块的解释，可以看<a href="https://www.runoob.com/python/os-file-methods.html">链接</a></p>
+
+<p>常用的：</p>
+
+<p><code class="language-plaintext highlighter-rouge">os.getcwd()</code>：放回当前工作目录</p>
+
+<p><code class="language-plaintext highlighter-rouge">os.listdir()</code>：返回path指定的文件夹包含的文件或者文件夹的名字的列表。</p>
+
+<p><code class="language-plaintext highlighter-rouge">os.makedir(path)</code>：以创建一个名为path的文件夹。</p>
+
+<p><code class="language-plaintext highlighter-rouge">os.open()</code>：打开一个文件，并且设置需要的打开选项。</p>
+
+<p><code class="language-plaintext highlighter-rouge">os.path()</code>：获取文件的属性信息。</p>
+
+<h3 id="递归的时间复杂度"><strong>递归的时间复杂度</strong></h3>
+
+<p>若算法执行所需要的辅助空间相对于输入数据n而言是一个常数，则称这个算法空间复杂度辅助空间为$O(1)$；</p>
+
+<p>递归算法空间复杂度：递归深度$n$乘以每次递归所要的辅助空间，如果每次递归所需要的辅助空间为常数，则递归空间复杂度$O(n)$。</p>
+
+<p>递归用的栈的思想。</p>
+
+<h3 id="ordchr">ord()/chr()</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span><span class="k">print</span> <span class="nb">chr</span><span class="p">(</span><span class="mh">0x30</span><span class="p">),</span> <span class="nb">chr</span><span class="p">(</span><span class="mh">0x31</span><span class="p">),</span> <span class="nb">chr</span><span class="p">(</span><span class="mh">0x61</span><span class="p">)</span>   <span class="c1"># 十六进制
+</span><span class="mi">0</span> <span class="mi">1</span> <span class="n">a</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span> <span class="nb">chr</span><span class="p">(</span><span class="mi">48</span><span class="p">),</span> <span class="nb">chr</span><span class="p">(</span><span class="mi">49</span><span class="p">),</span> <span class="nb">chr</span><span class="p">(</span><span class="mi">97</span><span class="p">)</span>         <span class="c1"># 十进制
+</span><span class="mi">0</span> <span class="mi">1</span> <span class="n">a</span>
+</code></pre></div></div>
+
+
+        </div>
+        <br><br>
+      </article>
+
+      <nav class="post-pagination">
+        
+        <a href="/study/leetcode-recorder-05.html" class="btn previous" title="leetcode algorithm-05">&larr; leetcode algorithm-05</a>
+        
+        
+        <a href="/study/leetcode-recorder-06.html" class="btn next" title="leetcode algorithm-06">leetcode algorithm-06 &rarr;</a>
+        
+      </nav>
+
+      <hr>
+
+      
+      <aside class="related">
+        <h3>Related Posts</h3>
+        <ul class="related-posts">
+          
+            <li>
+              <a href="/study/leetcode-recorder-09.html">
+                leetcode algorithm-09
+                <small><time datetime="2020-07-01T00:00:00+08:00">01 Jul 2020</time></small>
+              </a>
+            </li>
+          
+            <li>
+              <a href="/competition/As-a-rookie-firstAK.html">
+                record of my first AK
+                <small><time datetime="2020-06-28T00:00:00+08:00">28 Jun 2020</time></small>
+              </a>
+            </li>
+          
+            <li>
+              <a href="/study/leetcode-recorder-08.html">
+                leetcode algorithm-08
+                <small><time datetime="2020-06-24T00:00:00+08:00">24 Jun 2020</time></small>
+              </a>
+            </li>
+          
+        </ul>
+      </aside>
+      
+
+      <!-- Gitment -->
+<div id="container"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: '页面 ID', // 可选。默认为 location.href
+  owner: 'lszero',
+  repo: 'lszero.github.io',
+  oauth: {
+    client_id: '5cbd280dd9b27339aee6',
+    client_secret: '18164941d46a714a7577cb7d14e642936ad2ac16',
+  },
+})
+gitment.render('container')
+</script>
+    </div>
+    
+    <div class="col-md-3 post-sidebar">
+      <div class="sidebar-content" id="sidebar">
+  <nav class="header-list-sidebar">
+    <ul id="sideNav" class="nav headers-sidenav">
+        <!-- code will be generated in TOC.js -->
+    </ul>
+  </nav>
+</div>
+    </div>
+  </div>
+</div>
+
+
+    <footer class="footer">
+  <div class="copyright">
+      Copyright &copy; <time datetime="2020-07-24T00:31:30+08:00">2020</time> <a href="http://localhost:4000">cxcacac</a> | Powered by <a href="https://github.com/jekyll/jekyll">Jekyll</a> | Designed by <a href="http://localhost:4000">cxcacac</a>
+  </div>
+</footer>
+
+    <a href="#top" class="back-to-top">^</a>
+
+<!--      -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="/assets/js/jquery-1.12.4.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/assets/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <!-- TOC -->
+    <script src="/assets/js/toc/TOC.js"></script>
+
+    <script>$("#search-form").submit(function(event){
+      var query = document.getElementById("search-input").value;
+      window.open("http://google.com/search?q=" + query + "%20site:" + "cxcacac.github.io");
+    });</script>
+  </body>
+</html>

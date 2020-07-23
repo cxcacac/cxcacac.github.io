@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>
+    
+      leetcode algorithm-05 &middot; My thoughts
+    
+  </title>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="/assets/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/assets/font-awesome/css/font-awesome.min.css">
+  <!-- My CSS -->
+  <link rel="stylesheet" href="/assets/main.css">
+
+  <link rel="shortcut icon" href="/img/favicon.ico">
+
+  <!-- MathJax -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      TeX: {
+        equationNumbers: {
+          autoNumber: "AMS"
+        }
+      },
+      tex2jax: {
+        inlineMath: [ ['$','$'] ],
+        displayMath: [ ['$$','$$'] ],
+        processEscapes: true,
+      }
+    });
+  </script>
+  
+
+  <!-- code highlighting-->
+  <link rel="stylesheet" href="/lib/highlight/styles/hybrid.css">
+  <script src="/lib/highlight/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script>hljs.configure({ ignore: ['text'] });</script>
+  
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+    <header class="header">
+  <!-- Navigation -->
+  <nav class="navbar navbar-default .navbar-static-top">
+    <div class="container">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/" style="color:#333">My thoughts</a>
+        <p class="navbar-text">Intuitions are better than theories with enough proficiency.</p>
+      </div>
+
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+          <li class="nav-search">
+            <form class="navbar-form navbar-left" role="search" id="search-form">
+              <div class="input-group">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit" style="color:#777">Go!</button>
+                  </span>
+                  <input type="text" id="search-input" class="form-control" placeholder="Search">
+                  
+              </div>
+            </form>
+          </li>
+          <li>
+            <a href="/archives.html">Archives</a>
+          </li>
+          <li>
+            <a href="/categories.html">Categories</a>
+          </li>
+          <li>
+            <a href="/tags.html">Tags</a>
+          </li>
+          <li>
+            <a href="/about.html">About</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+  
+    <div class="container">
+  <div class="row-fluid main">
+    <div class="col-md-9 content">
+      <article class="post">
+        <h1 class="post-title">leetcode algorithm-05</h1>
+
+        <div class="post-info">
+          <span class="post-date">03 Jun 2020</span>
+           | 
+            <span class="fa fa-folder-open" aria-hidden="true">
+            
+              <a class="post-categories" href="/categories.html#study">study</a>
+            
+            </span>
+          
+           | 
+            <span class="fa fa-tag" aria-hidden="true">
+            
+              <a class="post-tags" href="/tags.html#Leetcode,">Leetcode,</a>
+            
+              <a class="post-tags" href="/tags.html#graph">graph</a>
+            
+              <a class="post-tags" href="/tags.html#algorithm">algorithm</a>
+            
+            </span>
+          
+        </div>
+
+        <hr>
+        <div class="post-content">
+          <h1 id="刷题记录-0603">刷题记录-0603</h1>
+
+<h2 id="图的算法网络延迟时间">图的算法：<a href="https://leetcode-cn.com/problems/network-delay-time/">网络延迟时间</a></h2>
+
+<p>注：该Blog参考博主<a href="https://leetcode-cn.com/u/hncboy/">hncboy</a>，<a href="https://leetcode-cn.com/problems/network-delay-time/solution/java-shi-xian-dijkstra-floyd-bellman-ford-spfa-by-/">网页链接</a>。</p>
+
+<p>这个网络延迟时间算是最短路径题的典型，这里对图的各种算法进行记录和python\java实现。包括：</p>
+
+<ul>
+  <li>深度优先遍历BFS+广度优先遍历DFS</li>
+  <li>Dijkstra算法</li>
+  <li>Bellman-Ford算法</li>
+  <li>Floyd-Warshall算法</li>
+  <li>SPFA算法</li>
+</ul>
+
+<h3 id="深度优先遍历"><strong>深度优先遍历</strong></h3>
+
+<p>在深度遍历中，没有<code class="language-plaintext highlighter-rouge">visited</code>这一项，但是对图的权重加了个<code class="language-plaintext highlighter-rouge">relaxation</code>，其实就是一个比较，如果更改之后需要再更新，直到不能松弛为止，效率还是比较低的。时间复杂度应该是$O(n^n)$，带权图问题还是不要用深度优先遍历。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">networkDelayTime</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">times</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="n">N</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">K</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">adj</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+        <span class="c1"># 统计一层需要的最大时间。
+</span>        <span class="c1"># 如果访问过，需要一个relaxation。
+</span>        <span class="n">distance</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="s">'inf'</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+        <span class="n">distance</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">time</span> <span class="ow">in</span> <span class="n">times</span><span class="p">:</span>
+            <span class="n">adj</span><span class="p">[</span><span class="n">time</span><span class="p">[</span><span class="mi">0</span><span class="p">]].</span><span class="n">append</span><span class="p">([</span><span class="n">time</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">time</span><span class="p">[</span><span class="mi">2</span><span class="p">]])</span>
+        
+        <span class="k">def</span> <span class="nf">dfs</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">curtime</span><span class="p">):</span>
+            <span class="c1"># 
+</span>            <span class="k">if</span> <span class="n">curtime</span> <span class="o">&gt;=</span> <span class="n">distance</span><span class="p">[</span><span class="n">start</span><span class="p">]:</span>
+                <span class="k">return</span> 
+            <span class="n">distance</span><span class="p">[</span><span class="n">start</span><span class="p">]</span> <span class="o">=</span> <span class="n">curtime</span>
+            <span class="c1"># 如果最小时间更新了，那么后面的节点也要更新。
+</span>            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">adj</span><span class="p">[</span><span class="n">start</span><span class="p">]:</span>
+                <span class="c1"># 这里还有回溯的思想。
+</span>                <span class="n">dfs</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">curtime</span><span class="o">+</span><span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                
+        <span class="n">dfs</span><span class="p">(</span><span class="n">K</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">max</span><span class="p">(</span><span class="n">distance</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">float</span><span class="p">(</span><span class="s">'inf'</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">distance</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+</code></pre></div></div>
+
+<h3 id="广度优先遍历"><strong>广度优先遍历</strong></h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">networkDelayTime</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">times</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="n">N</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">K</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">adj</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+        <span class="c1"># 统计一层需要的最大时间。
+</span>        <span class="c1"># 如果访问过，需要一个relaxation。
+</span>        <span class="n">distance</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="s">'inf'</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+        <span class="n">distance</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">time</span> <span class="ow">in</span> <span class="n">times</span><span class="p">:</span>
+            <span class="n">adj</span><span class="p">[</span><span class="n">time</span><span class="p">[</span><span class="mi">0</span><span class="p">]].</span><span class="n">append</span><span class="p">([</span><span class="n">time</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">time</span><span class="p">[</span><span class="mi">2</span><span class="p">]])</span>
+        
+        <span class="k">def</span> <span class="nf">bfs</span><span class="p">(</span><span class="n">start</span><span class="p">):</span>
+            <span class="n">distance</span><span class="p">[</span><span class="n">start</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">queue</span> <span class="o">=</span> <span class="p">[</span><span class="n">start</span><span class="p">]</span>
+            <span class="k">while</span> <span class="n">queue</span><span class="p">:</span>
+                <span class="n">temp</span> <span class="o">=</span> <span class="n">queue</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">adj</span><span class="p">[</span><span class="n">temp</span><span class="p">]:</span>
+                    <span class="k">if</span> <span class="n">distance</span><span class="p">[</span><span class="n">temp</span><span class="p">]</span> <span class="o">+</span> <span class="n">node</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">distance</span><span class="p">[</span><span class="n">node</span><span class="p">[</span><span class="mi">0</span><span class="p">]]:</span>
+                        <span class="n">distance</span><span class="p">[</span><span class="n">node</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">distance</span><span class="p">[</span><span class="n">temp</span><span class="p">]</span> <span class="o">+</span> <span class="n">node</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                        <span class="n">queue</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                        <span class="c1"># 如果没有更新，则无需再添加。
+</span>        <span class="n">bfs</span><span class="p">(</span><span class="n">K</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">max</span><span class="p">(</span><span class="n">distance</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">float</span><span class="p">(</span><span class="s">'inf'</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">distance</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+</code></pre></div></div>
+
+<h3 id="dijkstra算法"><strong>Dijkstra算法</strong></h3>
+
+<p>建立源点集<code class="language-plaintext highlighter-rouge">S={start...}</code>，选取距离最小的顶点<code class="language-plaintext highlighter-rouge">k</code>加入到S中，以<code class="language-plaintext highlighter-rouge">k</code>为新考虑的节点，对k相连的节点进行权重的比较，如更新的距离值小于原来的距离值，则修改路径。重复这个步骤直到所有节点加入到<code class="language-plaintext highlighter-rouge">S</code>中。</p>
+
+<p>Dijkstra算法具有单向性，需要visited数组，而且需要数学证明。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">networkDelayTime</span><span class="o">(</span><span class="kt">int</span><span class="o">[][]</span> <span class="n">times</span><span class="o">,</span> <span class="kt">int</span> <span class="no">N</span><span class="o">,</span> <span class="kt">int</span> <span class="no">K</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// 构建邻接矩阵，给边建立权重，这里采用数组直接声明</span>
+        <span class="c1">// 邻接矩阵和邻接表不同，邻接矩阵一般采用直接便利的方式，不做BFS和DFS</span>
+        <span class="kt">int</span><span class="o">[][]</span> <span class="n">graph</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="no">N</span><span class="o">+</span><span class="mi">1</span><span class="o">][</span><span class="no">N</span><span class="o">+</span><span class="mi">1</span><span class="o">];</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="no">N</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+            <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span> <span class="n">j</span><span class="o">&lt;=</span><span class="no">N</span><span class="o">;</span> <span class="n">j</span><span class="o">++){</span>
+                <span class="n">graph</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="nl">time:</span><span class="n">times</span><span class="o">){</span>
+            <span class="n">graph</span><span class="o">[</span><span class="n">time</span><span class="o">[</span><span class="mi">0</span><span class="o">]][</span><span class="n">time</span><span class="o">[</span><span class="mi">1</span><span class="o">]]=</span><span class="n">time</span><span class="o">[</span><span class="mi">2</span><span class="o">];</span>
+
+        <span class="o">}</span>
+        <span class="kt">int</span><span class="o">[]</span> <span class="n">distance</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="no">N</span><span class="o">+</span><span class="mi">1</span><span class="o">];</span>
+        <span class="nc">Arrays</span><span class="o">.</span><span class="na">fill</span><span class="o">(</span><span class="n">distance</span><span class="o">,-</span><span class="mi">1</span><span class="o">);</span>
+        <span class="c1">// 初始化连接出发节点的所有结点的距离。</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="no">N</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+            <span class="n">distance</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">graph</span><span class="o">[</span><span class="no">K</span><span class="o">][</span><span class="n">i</span><span class="o">];</span>
+        <span class="o">}</span>
+        <span class="n">distance</span><span class="o">[</span><span class="no">K</span><span class="o">]</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="c1">// 默认填false</span>
+        <span class="kt">boolean</span><span class="o">[]</span> <span class="n">visited</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">boolean</span><span class="o">[</span><span class="no">N</span><span class="o">+</span><span class="mi">1</span><span class="o">];</span>
+        <span class="n">visited</span><span class="o">[</span><span class="no">K</span><span class="o">]</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="c1">// 遍历除K节点的所有节点</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="no">N</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+            <span class="kt">int</span> <span class="n">minDistance</span> <span class="o">=</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">MAX_VALUE</span><span class="o">;</span>
+            <span class="kt">int</span> <span class="n">minIndex</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+            <span class="c1">// 寻找据当前节点最近的节点</span>
+            <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span> <span class="n">j</span><span class="o">&lt;=</span><span class="no">N</span><span class="o">;</span> <span class="n">j</span><span class="o">++){</span>
+                <span class="c1">// 如果没有访问过，当前节点能到达下一个节点，则可以更新寻找最小值。</span>
+                <span class="k">if</span><span class="o">(!</span><span class="n">visited</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="n">distance</span><span class="o">[</span><span class="n">j</span><span class="o">]!=-</span><span class="mi">1</span> <span class="o">&amp;&amp;</span><span class="n">distance</span><span class="o">[</span><span class="n">j</span><span class="o">]&lt;</span><span class="n">minDistance</span><span class="o">){</span>
+                    <span class="n">minDistance</span> <span class="o">=</span> <span class="n">distance</span><span class="o">[</span><span class="n">j</span><span class="o">];</span>
+                    <span class="n">minIndex</span> <span class="o">=</span> <span class="n">j</span><span class="o">;</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+            <span class="n">visited</span><span class="o">[</span><span class="n">minIndex</span><span class="o">]</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+            <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span> <span class="n">j</span><span class="o">&lt;=</span><span class="no">N</span><span class="o">;</span> <span class="n">j</span><span class="o">++){</span>
+                <span class="c1">//对源节点相连的节点权重进行更新。</span>
+                <span class="k">if</span><span class="o">(</span><span class="n">graph</span><span class="o">[</span><span class="n">minIndex</span><span class="o">][</span><span class="n">j</span><span class="o">]!=-</span><span class="mi">1</span><span class="o">){</span>
+                    <span class="k">if</span><span class="o">(</span><span class="n">distance</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="o">){</span>
+                        <span class="c1">// 这里只能说到该点的值是最小值，而不是对源集来说的最小距离。</span>
+                        <span class="n">distance</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="nc">Math</span><span class="o">.</span><span class="na">min</span><span class="o">(</span><span class="n">distance</span><span class="o">[</span><span class="n">j</span><span class="o">],</span> <span class="n">distance</span><span class="o">[</span><span class="n">minIndex</span><span class="o">]+</span><span class="n">graph</span><span class="o">[</span><span class="n">minIndex</span><span class="o">][</span><span class="n">j</span><span class="o">]);</span>
+                    <span class="o">}</span><span class="k">else</span><span class="o">{</span>
+                        <span class="c1">// 如果没有和源节点相连，则只进行路径的第一次赋值，表明可以被源集接触。</span>
+                        <span class="n">distance</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">distance</span><span class="o">[</span><span class="n">minIndex</span><span class="o">]</span> <span class="o">+</span> <span class="n">graph</span><span class="o">[</span><span class="n">minIndex</span><span class="o">][</span><span class="n">j</span><span class="o">];</span> 
+                    <span class="o">}</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="kt">int</span> <span class="nc">Maxdistance</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="no">N</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+            <span class="k">if</span><span class="o">(</span><span class="n">distance</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="o">){</span>
+                <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
+            <span class="o">}</span>
+            <span class="nc">Maxdistance</span> <span class="o">=</span> <span class="nc">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">distance</span><span class="o">[</span><span class="n">i</span><span class="o">],</span><span class="nc">Maxdistance</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="nc">Maxdistance</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="floyd算法"><strong>Floyd算法</strong></h3>
+
+<p>思路：动态规划算法，对任意两点<code class="language-plaintext highlighter-rouge">i,j</code>间的路径有两种子状态，直接从<code class="language-plaintext highlighter-rouge">i</code>到<code class="language-plaintext highlighter-rouge">j</code>和从<code class="language-plaintext highlighter-rouge">i-k-j</code>两种状态，所以可以遍历中间节点，来松弛更新<code class="language-plaintext highlighter-rouge">i</code>到<code class="language-plaintext highlighter-rouge">j</code>的路径。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">networkDelayTime</span><span class="o">(</span><span class="kt">int</span><span class="o">[][]</span> <span class="n">times</span><span class="o">,</span> <span class="kt">int</span> <span class="no">N</span><span class="o">,</span> <span class="kt">int</span> <span class="no">K</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// 构建邻接矩阵,初始化</span>
+        <span class="kt">int</span><span class="o">[][]</span> <span class="n">graph</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="no">N</span><span class="o">+</span><span class="mi">1</span><span class="o">][</span><span class="no">N</span><span class="o">+</span><span class="mi">1</span><span class="o">];</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="no">N</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+            <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="no">N</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span> <span class="n">j</span><span class="o">++){</span>
+                <span class="n">graph</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">i</span><span class="o">==</span><span class="n">j</span><span class="o">?</span> <span class="mi">0</span><span class="o">:-</span><span class="mi">1</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="nl">time:</span> <span class="n">times</span><span class="o">){</span>
+            <span class="n">graph</span><span class="o">[</span><span class="n">time</span><span class="o">[</span><span class="mi">0</span><span class="o">]][</span><span class="n">time</span><span class="o">[</span><span class="mi">1</span><span class="o">]]</span> <span class="o">=</span> <span class="n">time</span><span class="o">[</span><span class="mi">2</span><span class="o">];</span>
+        <span class="o">}</span>
+        <span class="c1">// 遍历所有节点，k代表中间节点,这里将采用k作为中间节点松弛</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="no">N</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span> <span class="n">k</span><span class="o">++){</span>
+            <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="no">N</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+                <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="no">N</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span> <span class="n">j</span><span class="o">++){</span>
+                    <span class="k">if</span><span class="o">(</span><span class="n">graph</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">k</span><span class="o">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">graph</span><span class="o">[</span><span class="n">k</span><span class="o">][</span><span class="n">j</span><span class="o">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="o">){</span>
+                        <span class="c1">// 如果存在路径i-k-j路径，则进行松弛，否则建立路径。</span>
+                        <span class="k">if</span><span class="o">(</span><span class="n">graph</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="o">){</span>
+                            <span class="n">graph</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="nc">Math</span><span class="o">.</span><span class="na">min</span><span class="o">(</span><span class="n">graph</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">],</span> <span class="n">graph</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">k</span><span class="o">]</span> <span class="o">+</span> <span class="n">graph</span><span class="o">[</span><span class="n">k</span><span class="o">][</span><span class="n">j</span><span class="o">]);</span>
+                        <span class="o">}</span><span class="k">else</span><span class="o">{</span>
+                            <span class="n">graph</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">graph</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">k</span><span class="o">]</span> <span class="o">+</span> <span class="n">graph</span><span class="o">[</span><span class="n">k</span><span class="o">][</span><span class="n">j</span><span class="o">];</span>
+                        <span class="o">}</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="kt">int</span> <span class="n">maxDistance</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="no">N</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+            <span class="k">if</span><span class="o">(</span><span class="n">graph</span><span class="o">[</span><span class="no">K</span><span class="o">][</span><span class="n">i</span><span class="o">]==-</span><span class="mi">1</span><span class="o">){</span>
+                <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
+            <span class="o">}</span>
+            <span class="n">maxDistance</span> <span class="o">=</span> <span class="nc">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">maxDistance</span><span class="o">,</span> <span class="n">graph</span><span class="o">[</span><span class="no">K</span><span class="o">][</span><span class="n">i</span><span class="o">]);</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">maxDistance</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="bellman-ford算法">Bellman-ford算法</h3>
+
+<p>思路：对所有的边（节点）进行松弛，每次松弛都会得到一条最短路径，每次松弛<code class="language-plaintext highlighter-rouge">V-1</code>次，若可以无限松弛，则说明包含负环。</p>
+
+<p>步骤：初始化图，有起点<code class="language-plaintext highlighter-rouge">s</code>到各个顶点的距离<code class="language-plaintext highlighter-rouge">dist(v)</code>，对每个边进行松弛操作，即$dist(u)+w(u,b)&lt;dist(v)$，遍历完成后，继续遍历，直到无法进行松弛为止。有点类似于循环BFS，是双向的，而Dijkstra算法效率相对来说就比较高，但是需要更好的数学证明。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">networkDelayTime</span><span class="o">(</span><span class="kt">int</span><span class="o">[][]</span> <span class="n">times</span><span class="o">,</span> <span class="kt">int</span> <span class="no">N</span><span class="o">,</span> <span class="kt">int</span> <span class="no">K</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// 构建邻接矩阵，给边建立权重，这里采用数组直接声明</span>
+        <span class="c1">// 邻接矩阵和邻接表不同，邻接矩阵一般采用直接遍历的方式，不做BFS和DFS</span>
+        <span class="kt">int</span><span class="o">[]</span> <span class="n">distance</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="no">N</span><span class="o">+</span><span class="mi">1</span><span class="o">];</span>
+        <span class="c1">//由于是最大化最短路径，而且值都是大于零的，所以这里所有点的距离取-1就可以。</span>
+        <span class="nc">Arrays</span><span class="o">.</span><span class="na">fill</span><span class="o">(</span><span class="n">distance</span><span class="o">,-</span><span class="mi">1</span><span class="o">);</span>
+        <span class="n">distance</span><span class="o">[</span><span class="no">K</span><span class="o">]</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="c1">// 进行松弛，每次总进行N-1次松弛操作。</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="no">N</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+            <span class="k">for</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="nl">time:</span> <span class="n">times</span><span class="o">){</span>
+                <span class="kt">int</span> <span class="n">u</span> <span class="o">=</span> <span class="n">time</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
+                <span class="kt">int</span> <span class="n">v</span> <span class="o">=</span> <span class="n">time</span><span class="o">[</span><span class="mi">1</span><span class="o">];</span>
+                <span class="kt">int</span> <span class="n">w</span> <span class="o">=</span> <span class="n">time</span><span class="o">[</span><span class="mi">2</span><span class="o">];</span>
+                <span class="k">if</span><span class="o">(</span><span class="n">distance</span><span class="o">[</span><span class="n">u</span><span class="o">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="o">){</span>
+                    <span class="k">if</span><span class="o">(</span><span class="n">distance</span><span class="o">[</span><span class="n">v</span><span class="o">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="o">){</span>
+                        <span class="n">distance</span><span class="o">[</span><span class="n">v</span><span class="o">]</span> <span class="o">=</span> <span class="nc">Math</span><span class="o">.</span><span class="na">min</span><span class="o">(</span><span class="n">distance</span><span class="o">[</span><span class="n">v</span><span class="o">],</span> <span class="n">distance</span><span class="o">[</span><span class="n">u</span><span class="o">]</span> <span class="o">+</span> <span class="n">w</span><span class="o">);</span>
+                    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                        <span class="n">distance</span><span class="o">[</span><span class="n">v</span><span class="o">]</span> <span class="o">=</span> <span class="n">distance</span><span class="o">[</span><span class="n">u</span><span class="o">]</span> <span class="o">+</span> <span class="n">w</span><span class="o">;</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="kt">int</span> <span class="n">maxDistance</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="no">N</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+            <span class="k">if</span><span class="o">(</span><span class="n">distance</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="o">){</span>
+                <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
+            <span class="o">}</span>
+            <span class="n">maxDistance</span> <span class="o">=</span> <span class="nc">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">distance</span><span class="o">[</span><span class="n">i</span><span class="o">],</span><span class="n">maxDistance</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">maxDistance</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="spfa算法moore-bellman-ford算法">SPFA算法(Moore-Bellman-Ford算法)</h3>
+
+<p>思路：SPFA算法的基本思路与贝尔曼-福特算法相同，即每个节点都被用作用于松弛其相邻节点的备选节点。相较于贝尔曼-福特算法，SPFA算法的提升在于它并不盲目尝试所有节点，而是维护一个备选节点队列，并且仅有节点被松弛后才会放入队列中。整个流程不断重复直至没有节点可以被松弛。</p>
+
+<p>针对Bellman-Ford简化了很多，这里只更新原来已经更新过的，类似于有限的BFS，最坏情况和Bellman-Ford算法相同的。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">networkDelayTime</span><span class="o">(</span><span class="kt">int</span><span class="o">[][]</span> <span class="n">times</span><span class="o">,</span> <span class="kt">int</span> <span class="no">N</span><span class="o">,</span> <span class="kt">int</span> <span class="no">K</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span><span class="o">[][]</span> <span class="n">graph</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="no">N</span><span class="o">+</span><span class="mi">1</span><span class="o">][</span><span class="no">N</span><span class="o">+</span><span class="mi">1</span><span class="o">];</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="no">N</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+            <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="no">N</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span> <span class="n">j</span><span class="o">++){</span>
+                <span class="n">graph</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">i</span><span class="o">==</span><span class="n">j</span><span class="o">?</span> <span class="mi">0</span><span class="o">:-</span><span class="mi">1</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="nl">time:</span> <span class="n">times</span><span class="o">){</span>
+            <span class="n">graph</span><span class="o">[</span><span class="n">time</span><span class="o">[</span><span class="mi">0</span><span class="o">]][</span><span class="n">time</span><span class="o">[</span><span class="mi">1</span><span class="o">]]</span> <span class="o">=</span> <span class="n">time</span><span class="o">[</span><span class="mi">2</span><span class="o">];</span>
+        <span class="o">}</span>
+        <span class="c1">// 按照 bellman-ford的思路，以k为原点。</span>
+        <span class="kt">int</span><span class="o">[]</span> <span class="n">distance</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="no">N</span><span class="o">+</span><span class="mi">1</span><span class="o">];</span>
+        <span class="nc">Arrays</span><span class="o">.</span><span class="na">fill</span><span class="o">(</span><span class="n">distance</span><span class="o">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">);</span>
+        <span class="n">distance</span><span class="o">[</span><span class="no">K</span><span class="o">]</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+
+        <span class="nc">Queue</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">queue</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">LinkedList</span><span class="o">&lt;&gt;();</span>
+        <span class="n">queue</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="no">K</span><span class="o">);</span>
+        <span class="k">while</span><span class="o">(!</span><span class="n">queue</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">()){</span>
+            <span class="kt">int</span> <span class="n">curr</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="na">poll</span><span class="o">();</span>
+            <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="no">N</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+                <span class="c1">// 依照当前已经更新过的节点进行松弛，如果可以更改路径，则添加到队列中。</span>
+                <span class="k">if</span><span class="o">(</span><span class="n">graph</span><span class="o">[</span><span class="n">curr</span><span class="o">][</span><span class="n">i</span><span class="o">]!=-</span><span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">distance</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="o">||</span> <span class="n">distance</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">&gt;</span> <span class="n">distance</span><span class="o">[</span><span class="n">curr</span><span class="o">]+</span><span class="n">graph</span><span class="o">[</span><span class="n">curr</span><span class="o">][</span><span class="n">i</span><span class="o">])){</span>
+                    <span class="n">distance</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">distance</span><span class="o">[</span><span class="n">curr</span><span class="o">]</span> <span class="o">+</span> <span class="n">graph</span><span class="o">[</span><span class="n">curr</span><span class="o">][</span><span class="n">i</span><span class="o">];</span>
+                    <span class="k">if</span><span class="o">(!</span><span class="n">queue</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="n">i</span><span class="o">)){</span>
+                        <span class="n">queue</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="kt">int</span> <span class="n">maxDistance</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="no">N</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">distance</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>  
+            <span class="o">}</span>
+            <span class="n">maxDistance</span> <span class="o">=</span> <span class="nc">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">distance</span><span class="o">[</span><span class="n">i</span><span class="o">],</span> <span class="n">maxDistance</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">maxDistance</span><span class="o">;</span>
+    <span class="o">}</span>
+</code></pre></div></div>
+
+
+        </div>
+        <br><br>
+      </article>
+
+      <nav class="post-pagination">
+        
+        <a href="/study/leetcode-recorder-04.html" class="btn previous" title="leetcode algorithm-04">&larr; leetcode algorithm-04</a>
+        
+        
+        <a href="/recorder/python-tips.html" class="btn next" title="Python small tips memo">Python small tips memo &rarr;</a>
+        
+      </nav>
+
+      <hr>
+
+      
+      <aside class="related">
+        <h3>Related Posts</h3>
+        <ul class="related-posts">
+          
+            <li>
+              <a href="/study/leetcode-recorder-09.html">
+                leetcode algorithm-09
+                <small><time datetime="2020-07-01T00:00:00+08:00">01 Jul 2020</time></small>
+              </a>
+            </li>
+          
+            <li>
+              <a href="/competition/As-a-rookie-firstAK.html">
+                record of my first AK
+                <small><time datetime="2020-06-28T00:00:00+08:00">28 Jun 2020</time></small>
+              </a>
+            </li>
+          
+            <li>
+              <a href="/study/leetcode-recorder-08.html">
+                leetcode algorithm-08
+                <small><time datetime="2020-06-24T00:00:00+08:00">24 Jun 2020</time></small>
+              </a>
+            </li>
+          
+        </ul>
+      </aside>
+      
+
+      <!-- Gitment -->
+<div id="container"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: '页面 ID', // 可选。默认为 location.href
+  owner: 'lszero',
+  repo: 'lszero.github.io',
+  oauth: {
+    client_id: '5cbd280dd9b27339aee6',
+    client_secret: '18164941d46a714a7577cb7d14e642936ad2ac16',
+  },
+})
+gitment.render('container')
+</script>
+    </div>
+    
+    <div class="col-md-3 post-sidebar">
+      <div class="sidebar-content" id="sidebar">
+  <nav class="header-list-sidebar">
+    <ul id="sideNav" class="nav headers-sidenav">
+        <!-- code will be generated in TOC.js -->
+    </ul>
+  </nav>
+</div>
+    </div>
+  </div>
+</div>
+
+
+    <footer class="footer">
+  <div class="copyright">
+      Copyright &copy; <time datetime="2020-07-24T00:31:30+08:00">2020</time> <a href="http://localhost:4000">cxcacac</a> | Powered by <a href="https://github.com/jekyll/jekyll">Jekyll</a> | Designed by <a href="http://localhost:4000">cxcacac</a>
+  </div>
+</footer>
+
+    <a href="#top" class="back-to-top">^</a>
+
+<!--      -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="/assets/js/jquery-1.12.4.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/assets/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <!-- TOC -->
+    <script src="/assets/js/toc/TOC.js"></script>
+
+    <script>$("#search-form").submit(function(event){
+      var query = document.getElementById("search-input").value;
+      window.open("http://google.com/search?q=" + query + "%20site:" + "cxcacac.github.io");
+    });</script>
+  </body>
+</html>

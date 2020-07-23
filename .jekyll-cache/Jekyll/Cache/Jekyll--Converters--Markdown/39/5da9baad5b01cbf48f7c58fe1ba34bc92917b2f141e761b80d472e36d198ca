@@ -1,0 +1,175 @@
+I"FL<h1 id="刷题记录-0527">刷题记录-0527</h1>
+
+<h3 id="拓扑排序课程表-ii">拓扑排序：<a href="https://leetcode-cn.com/problems/course-schedule-ii/">课程表 II</a></h3>
+
+<p>思路：这里用到了贪心算法，对每个课程都有前馈课程，如果前馈课程都修完（数组非空），则可以把包含该课程的所有前馈课程列表都去除，如果所有课程都能学习，返回True。</p>
+
+<p>之所以叫拓扑排序，<strong>拓扑排序（Topological Sorting</strong>）是一个有向无环图（DAG, Directed Acyclic Graph）的所有顶点的线性序列。满足以下规则:</p>
+
+<ol>
+  <li>每个顶点出现且只出现一次。</li>
+  <li>若存在一条从顶点 A 到顶点 B 的路径，那么在序列中顶点 A 出现在顶点 B 的前面。</li>
+</ol>
+
+<p>做法也很模板：</p>
+
+<ol>
+  <li>
+    <p>从 DAG 图中选择一个 没有前驱（即入度为0）的顶点并输出（贪心）。</p>
+  </li>
+  <li>
+    <p>从图中删除该顶点和所有以它为起点的有向边。</p>
+  </li>
+  <li>
+    <p>重复 1 和 2 直到当前的 DAG 图为空或当前图中不存在无前驱的顶点为止。后一种情况说明有向图中必然存在环。</p>
+  </li>
+</ol>
+
+<p>python：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">findOrder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">numCourses</span><span class="p">,</span> <span class="n">prerequisites</span><span class="p">):</span>
+        <span class="c1"># pre代表当前的课程入度
+</span>        <span class="n">pre</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numCourses</span><span class="p">)]</span>
+        <span class="n">post</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numCourses</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">prerequisites</span><span class="p">)):</span>
+            <span class="n">pre</span><span class="p">[</span><span class="n">prerequisites</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">post</span><span class="p">[</span><span class="n">prerequisites</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]].</span><span class="n">append</span><span class="p">(</span><span class="n">prerequisites</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+        <span class="c1"># 除了prequisite之外，还要建立与后面的数组的联系，形成有向图
+</span>        <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">bfs</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span><span class="n">post</span><span class="p">,</span><span class="n">numCourses</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">bfs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">pre</span><span class="p">,</span><span class="n">post</span><span class="p">,</span><span class="n">numCourses</span><span class="p">):</span>
+        <span class="n">queue</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pre</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">pre</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">queue</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">while</span> <span class="n">queue</span><span class="p">:</span>
+            <span class="c1"># 度为0的课程
+</span>            <span class="n">temp</span> <span class="o">=</span> <span class="n">queue</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">res</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">course</span> <span class="ow">in</span> <span class="n">post</span><span class="p">[</span><span class="n">temp</span><span class="p">]:</span>
+                <span class="n">pre</span><span class="p">[</span><span class="n">course</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">pre</span><span class="p">[</span><span class="n">course</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">queue</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">course</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="o">==</span> <span class="n">numCourses</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">res</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+</code></pre></div></div>
+
+<h3 id="状态压缩动态规划每个元音包含偶数次的最长子字符串"><strong>状态压缩动态规划</strong>：<a href="https://leetcode-cn.com/problems/find-the-longest-substring-containing-vowels-in-even-counts/">每个元音包含偶数次的最长子字符串</a></h3>
+
+<p>这个题的知识含量还是很多的，包括状态压缩，动态规划，位运算，前缀和和哈希。</p>
+
+<p><strong>状态压缩</strong></p>
+
+<p>前提：位运算：</p>
+
+<p><code class="language-plaintext highlighter-rouge">&amp;,&lt;&lt;</code>：判断一个数字$x$二进制下第$i$位是否等于1，<code class="language-plaintext highlighter-rouge">if((1&lt;&lt;(i-1))&amp;x)&gt;0</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">|,&lt;&lt;</code>：将数字$x$二进制下的第$i$位更改成1，<code class="language-plaintext highlighter-rouge">x = x|(1&lt;&lt;(i-1))</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">&amp;</code>：把数字二进制最靠右的第一个1去掉，<code class="language-plaintext highlighter-rouge">x=x&amp;(x-1)</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">^</code>：异或操作，位相同，则为0，<code class="language-plaintext highlighter-rouge">0^x=x</code></p>
+
+<p>在状态压缩中，所有可能的状态集合用二进制来表示。</p>
+
+<p><strong>思路：</strong>在该题中，对每个元音的奇偶值都有一个状态，用二进制<code class="language-plaintext highlighter-rouge">11111</code>表示全奇数，一共有32种状态。如果<code class="language-plaintext highlighter-rouge">nums[0:i]</code>和<code class="language-plaintext highlighter-rouge">nums[0:j]</code>具有相同的状态，那么中间的<code class="language-plaintext highlighter-rouge">nums[i:j]</code>一定满足状态不变要求。在这道题中，状态的改变需要用到异或操作来改变奇偶。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">findTheLongestSubstring</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">D</span> <span class="o">=</span> <span class="p">{</span><span class="s">"a"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"e"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">"i"</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s">"o"</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s">"u"</span><span class="p">:</span> <span class="mi">16</span><span class="p">}</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="s">'inf'</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">32</span><span class="p">)]</span>
+        <span class="n">state</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="c1">#为了满足长度的要求
+</span>        <span class="n">l</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+           	<span class="n">cur</span> <span class="o">^=</span> <span class="n">D</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="mi">0</span><span class="p">)</span>
+      		<span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="n">cur</span><span class="p">]</span><span class="o">==</span><span class="nb">float</span><span class="p">(</span><span class="s">'inf'</span><span class="p">):</span>
+                <span class="n">state</span><span class="p">[</span><span class="n">cur</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+          	<span class="k">else</span><span class="p">:</span>
+                <span class="n">ans</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">ans</span><span class="p">,</span><span class="n">i</span><span class="o">-</span><span class="n">state</span><span class="p">[</span><span class="n">cur</span><span class="p">])</span>
+       	<span class="k">return</span> <span class="n">ans</span>
+</code></pre></div></div>
+
+<h3 id="kmp算法实现-strstr">KMP算法：<a href="https://leetcode-cn.com/problems/implement-strstr/">实现 strStr()</a></h3>
+
+<p><strong>1.暴力匹配思路</strong>，这个是超时的。</p>
+
+<ul>
+  <li>如果当前字符串匹配成功，则继续匹配下一个字符</li>
+  <li>如果匹配失败，$i$回溯到初始位置的下一个位置，$j=0$，即$i = i-(j-1),j=0$.</li>
+</ul>
+
+<p><strong>2.Knuth-Morris-Pratt(KMP) algorithm</strong></p>
+
+<ul>
+  <li>关于算法详解可以看这个博主的文章<a href="https://blog.csdn.net/v_JULY_v/article/details/7041827">KMP</a>。</li>
+  <li>其中$next[j]==k$指不包括$p[j]$的模式串中最大长度为$k$的相同前缀与后缀，再次匹配需要让$j = next[j]$以避免完全暴力回溯，所以让模式串右移$j-next[j]$，从而使前面的部分继续匹配。</li>
+  <li>该方法的$next$数组指明了模式串在失配后应该跳到哪个位置。</li>
+  <li>在KMP算法中，重要的是求模式串$P$中的各个前缀后缀的最大公共元素表，之后就可以右移，初始值赋-1得到$next$数组，两个是一样的。前缀和后缀就是相当于字符串<code class="language-plaintext highlighter-rouge">z=xy</code>中x,y的组成，最大长度表也可以看该图。</li>
+</ul>
+
+<p><img src="\image\image-20200520214010445.png" alt="image-20200520214010445" /></p>
+
+<h3 id="二分法寻找两个正序数组的中位数">二分法：<a href="https://leetcode-cn.com/problems/median-of-two-sorted-arrays/">寻找两个正序数组的中位数</a></h3>
+
+<p>通用解法：二分求第K个最小值</p>
+
+<p><strong>思路1：</strong>我一开始的思路是传统二分，其实应该是对<code class="language-plaintext highlighter-rouge">K</code>值不断二分，然后K肯定能等于1，等于1的时候，存两个数，之后看奇偶取舍。</p>
+
+<p>图来自<a href="https://leetcode-cn.com/problems/median-of-two-sorted-arrays/solution/xiang-xi-tong-su-de-si-lu-fen-xi-duo-jie-fa-by-w-2/">windliang</a>:</p>
+
+<p><img src="\image\image-20200527159031001.jpg" alt="1590310013(1)" /></p>
+
+<p>python:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">def</span> <span class="nf">findkmin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums1</span><span class="p">,</span> <span class="n">nums2</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+        <span class="c1"># 最好确保 nums1&lt;nums2
+</span>        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums2</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">findkmin</span><span class="p">(</span><span class="n">nums2</span><span class="p">,</span><span class="n">nums1</span><span class="p">,</span><span class="n">k</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">nums2</span><span class="p">[</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">nums1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">nums2</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="c1"># half 代表要各取多少个数
+</span>        <span class="n">half</span> <span class="o">=</span> <span class="n">k</span><span class="o">//</span><span class="mi">2</span>
+        <span class="k">if</span> <span class="n">half</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums1</span><span class="p">):</span>
+        <span class="c1"># up 和 down 代表上下索引
+</span>            <span class="n">up</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums1</span><span class="p">)</span> <span class="o">-</span><span class="mi">1</span> 
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">up</span> <span class="o">=</span> <span class="n">half</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">down</span> <span class="o">=</span> <span class="n">half</span> <span class="o">-</span><span class="mi">1</span> 
+        <span class="k">if</span> <span class="n">nums1</span><span class="p">[</span><span class="n">up</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">nums2</span><span class="p">[</span><span class="n">down</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">findkmin</span><span class="p">(</span><span class="n">nums1</span><span class="p">[</span><span class="n">up</span><span class="o">+</span><span class="mi">1</span><span class="p">:],</span><span class="n">nums2</span><span class="p">,</span><span class="n">k</span><span class="o">-</span><span class="n">up</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">findkmin</span><span class="p">(</span><span class="n">nums1</span><span class="p">,</span> <span class="n">nums2</span><span class="p">[</span><span class="n">down</span><span class="o">+</span><span class="mi">1</span><span class="p">:],</span><span class="n">k</span><span class="o">-</span><span class="n">half</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="广度优先搜索n叉树的最大深度">广度优先搜索：<a href="https://leetcode-cn.com/problems/maximum-depth-of-n-ary-tree/">N叉树的最大深度</a></h3>
+
+<p>这个题不难，这里只是把广度优先搜索梳理一下。</p>
+
+<p>BFS算法是一种盲目搜索的算法，目的在于系统展开并检查图中的所有节点，以寻找可能的结果，它不考虑结果可能的地址，直到找到结果为止。</p>
+
+<p>实现方法：</p>
+
+<ol>
+  <li>首先将根节点放入队列中。</li>
+  <li>从队列中取出第一个节点，并检验它是否为目标。
+    <ul>
+      <li>如果找到目标，则结束搜索并回传结果。</li>
+      <li>否则将它所有尚未检验过的直接子节点加入队列中，同时将根节点删除（这就是为什么要用队列）。</li>
+    </ul>
+  </li>
+  <li>若队列为空，表示整张图都检查过了——亦即图中没有欲搜索的目标。结束搜索并回传“找不到目标”。</li>
+  <li>重复步骤2。</li>
+</ol>
+
+<p>关于BFS和DFS：</p>
+
+<p>一般情况下，是BFS+队列，DFS+栈，除了递归的方法之外，这两个办法实在太模板了…</p>
+:ET

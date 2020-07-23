@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>
+    
+      My thoughts &middot; 
+    
+  </title>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="/assets/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/assets/font-awesome/css/font-awesome.min.css">
+  <!-- My CSS -->
+  <link rel="stylesheet" href="/assets/main.css">
+
+  <link rel="shortcut icon" href="/img/favicon.ico">
+
+  <!-- MathJax -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      TeX: {
+        equationNumbers: {
+          autoNumber: "AMS"
+        }
+      },
+      tex2jax: {
+        inlineMath: [ ['$','$'] ],
+        displayMath: [ ['$$','$$'] ],
+        processEscapes: true,
+      }
+    });
+  </script>
+  
+
+  <!-- code highlighting-->
+  <link rel="stylesheet" href="/lib/highlight/styles/hybrid.css">
+  <script src="/lib/highlight/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script>hljs.configure({ ignore: ['text'] });</script>
+  
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+    <header class="header">
+  <!-- Navigation -->
+  <nav class="navbar navbar-default .navbar-static-top">
+    <div class="container">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/" style="color:#333">My thoughts</a>
+        <p class="navbar-text">Intuitions are better than theories with enough proficiency.</p>
+      </div>
+
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+          <li class="nav-search">
+            <form class="navbar-form navbar-left" role="search" id="search-form">
+              <div class="input-group">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit" style="color:#777">Go!</button>
+                  </span>
+                  <input type="text" id="search-input" class="form-control" placeholder="Search">
+                  
+              </div>
+            </form>
+          </li>
+          <li>
+            <a href="/archives.html">Archives</a>
+          </li>
+          <li>
+            <a href="/categories.html">Categories</a>
+          </li>
+          <li>
+            <a href="/tags.html">Tags</a>
+          </li>
+          <li>
+            <a href="/about.html">About</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+  
+    <div class="container">
+  <div class="row-fluid main">
+    <div class="col-md-9 content main-posts-preview">
+      
+      <article class="post-preview">
+        <h1 class="post-title">
+          <a href="/study/leetcode-recorder-02.html">leetcode algorithm-02</a>
+        </h1>
+
+        <div class="post-info">
+          <span class="post-date">20 May 2020</span>
+           | 
+            <span class="fa fa-folder-open" aria-hidden="true">
+            
+              <a class="post-categories" href="/categories.html#study">study</a>
+            
+            </span>
+          
+           | 
+            <span class="fa fa-tag" aria-hidden="true">
+            
+              <a class="post-tags" href="/tags.html#Leetcode">Leetcode</a>
+            
+            </span>
+          
+        </div>
+
+        <div class="post-excerpt">
+          <h1 id="刷题记录-0520">刷题记录-0520</h1>
+
+<h3 id="链表题k个一组翻转链表"><strong>链表题：<a href="https://leetcode-cn.com/problems/reverse-nodes-in-k-group/">K个一组翻转链表</a></strong></h3>
+
+<p><strong>思路1：</strong>通过快慢指针的思路，将链表用$start$和$end$指针截出来一段，将这一段进行$reverseList()$，为了保持位置不变性，需要记住要反转链表的前一个元素的位置$pre$和后一个元素的位置$next$，翻转完成后更新指针$start,end,pre,next$，而且这四个节点对应的位置是有关系的。</p>
+
+<p>代码：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">def</span> <span class="nf">reverseKGroup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">head</span><span class="p">:</span> <span class="n">ListNode</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ListNode</span><span class="p">:</span>
+        <span class="n">dummy</span> <span class="o">=</span> <span class="n">ListNode</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">dummy</span><span class="p">.</span><span class="nb">next</span> <span class="o">=</span> <span class="n">head</span>
+        <span class="c1"># 创造两个指针，同时指向dummy的位置，pre表示链表前面的元素位置，end是用来指向翻转链表的最后一个元素。
+</span>        <span class="n">pre</span> <span class="o">=</span> <span class="n">dummy</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="n">dummy</span>
+        <span class="k">while</span> <span class="n">end</span><span class="p">.</span><span class="nb">next</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">end</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+                    <span class="n">end</span> <span class="o">=</span> <span class="n">end</span><span class="p">.</span><span class="nb">next</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">break</span>
+            <span class="k">if</span> <span class="n">end</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="n">pre</span><span class="p">.</span><span class="nb">next</span> 
+            <span class="n">Next</span> <span class="o">=</span> <span class="n">end</span><span class="p">.</span><span class="nb">next</span> 
+            <span class="n">end</span><span class="p">.</span><span class="nb">next</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="c1"># 反转链表后进入下一段，此时start的位置已经变到最后一位了，首先将start.next的位置和Next连上。
+</span>            <span class="n">pre</span><span class="p">.</span><span class="nb">next</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">reverse</span><span class="p">(</span><span class="n">start</span><span class="p">)</span>
+            <span class="n">start</span><span class="p">.</span><span class="nb">next</span> <span class="o">=</span> <span class="n">Next</span>
+            <span class="n">pre</span> <span class="o">=</span> <span class="n">start</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">pre</span>
+        <span class="k">return</span> <span class="n">dummy</span><span class="p">.</span><span class="nb">next</span>
+
+    <span class="k">def</span> <span class="nf">reverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">head</span><span class="p">):</span>
+        <span class="n">pre</span> <span class="o">=</span> <span class="n">ListNode</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">curr</span> <span class="o">=</span> <span class="n">head</span>
+        <span class="k">while</span> <span class="n">curr</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">Next</span> <span class="o">=</span> <span class="n">curr</span><span class="p">.</span><span class="nb">next</span> 
+            <span class="n">curr</span><span class="p">.</span><span class="nb">next</span> <span class="o">=</span> <span class="n">pre</span>
+            <span class="n">pre</span> <span class="o">=</span> <span class="n">curr</span>
+            <span class="n">curr</span> <span class="o">=</span> <span class="n">Next</span> 
+            <span class="c1"># 链表之间的赋值会把next指向保留吗？
+</span>        <span class="k">return</span> <span class="n">pre</span>
+</code></pre></div></div>
+
+<p>注：赋值操作$l_1=l_2$，理解成$l_1$指针指向$l2$。</p>
+
+<p>反转单向链表：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="nc">Node</span> <span class="nf">reverseList</span><span class="o">(</span><span class="nc">Node</span> <span class="n">head</span><span class="o">){</span>
+    <span class="c1">// 需要两个指针</span>
+    <span class="c1">// pre指向已反转链表的头节点</span>
+    <span class="c1">// next指向未反转链表的头节点</span>
+    <span class="nc">Node</span> <span class="n">pre</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="nc">Node</span> <span class="n">next</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="k">while</span> <span class="o">(</span><span class="n">head</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+		<span class="c1">// 保存当前头节点的下一个节点。</span>
+        <span class="n">next</span> <span class="o">=</span> <span class="n">head</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+		<span class="c1">// 将当前头节点的下一个节点指向最先前的节点pre，实现反转。</span>
+        <span class="n">head</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">pre</span><span class="o">;</span>
+        <span class="c1">// 更新反转链表之后，也要更新pre的指向到已反转链表的头节点。</span>
+        <span class="n">pre</span> <span class="o">=</span> <span class="n">head</span><span class="o">;</span>
+		<span class="c1">// head继续指向未反转链表的头节点进行下一次循环，直到head==null，反转完成。</span>
+        <span class="n">head</span> <span class="o">=</span> <span class="n">next</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">pre</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>示意图：</p>
+
+<p>注：图来自博主<a href="https://blog.csdn.net/xyh269">yinhuanxu</a>，<a href="https://blog.csdn.net/xyh269/article/details/70238501">参考链接1</a>。</p>
+
+<ul>
+  <li>第一层循环</li>
+</ul>
+
+<p><img src=".\image\image-20200516161644040.png" alt="image-20200516161644040" /></p>
+
+<ul>
+  <li>第二层循环</li>
+</ul>
+
+<p><img src=".\image\image-20200516161904990.png" alt="image-20200516161904990" /></p>
+
+<p><strong>思路2：</strong>使用栈，将一定长度的链表存入栈中，之后从栈顶弹出即可。从这里也可以看出栈和数组的相似性，只不过作为存储的两种形式，一种是$index$访问，量化存储。一种是多了一个$ListNode.next$建立联系，便于进行插入和删除操作。</p>
+
+<p>代码：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">reverseKGroup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">head</span><span class="p">:</span> <span class="n">ListNode</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ListNode</span><span class="p">:</span>   
+	    <span class="n">dummy</span> <span class="o">=</span> <span class="n">ListNode</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">dummy</span><span class="p">.</span><span class="nb">next</span> <span class="o">=</span> <span class="n">head</span>
+
+        <span class="n">p</span> <span class="o">=</span> <span class="n">dummy</span>
+        <span class="c1"># Next 指针指向未翻转链表第一个位置
+</span>        <span class="n">Next</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="nb">next</span>
+        <span class="k">while</span> <span class="n">Next</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">count</span> <span class="o">=</span> <span class="n">k</span>
+            <span class="k">while</span> <span class="n">count</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">Next</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">stack</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">Next</span><span class="p">)</span>
+                <span class="n">count</span> <span class="o">-=</span> <span class="mi">1</span>
+                <span class="n">Next</span> <span class="o">=</span> <span class="n">Next</span><span class="p">.</span><span class="nb">next</span>
+            <span class="c1"># 这个地方不能直接输出，因为k=1的情况，会导致没有输出。
+</span>            <span class="k">if</span> <span class="n">count</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="c1"># 将栈内的元素组成链表,p逐步指到到链表最后的一个元素。
+</span>            <span class="k">while</span> <span class="n">stack</span><span class="p">:</span>
+                <span class="n">p</span><span class="p">.</span><span class="nb">next</span> <span class="o">=</span> <span class="n">stack</span><span class="p">.</span><span class="n">pop</span><span class="p">()</span>
+                <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="nb">next</span> 
+            <span class="n">p</span><span class="p">.</span><span class="nb">next</span> <span class="o">=</span> <span class="n">Next</span> 
+        <span class="k">return</span> <span class="n">dummy</span><span class="p">.</span><span class="nb">next</span> 
+</code></pre></div></div>
+
+<p><strong>思路3：</strong>递归，将链表分为两个部分，手动翻转+递归翻转的两个部分，如果最后没凑够k个整数，那么就不调用翻转了，这个递归应该是承接了翻转链表的一部分，即把$pre=cur$.</p>
+
+<p>代码参考<a href="https://leetcode-cn.com/problems/reverse-nodes-in-k-group/">powcai</a>：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">reverseKGroup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">head</span><span class="p">:</span> <span class="n">ListNode</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ListNode</span><span class="p">:</span> 
+    	<span class="c1"># 引入curr指针
+</span>        <span class="n">cur</span> <span class="o">=</span> <span class="n">head</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">cur</span> <span class="ow">and</span> <span class="n">count</span><span class="o">!=</span> <span class="n">k</span><span class="p">:</span>
+            <span class="n">cur</span> <span class="o">=</span> <span class="n">cur</span><span class="p">.</span><span class="nb">next</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">count</span> <span class="o">==</span> <span class="n">k</span><span class="p">:</span>
+            <span class="n">cur</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">reverseKGroup</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+            <span class="k">while</span> <span class="n">count</span><span class="p">:</span>
+                <span class="n">tmp</span> <span class="o">=</span> <span class="n">head</span><span class="p">.</span><span class="nb">next</span>
+                <span class="n">head</span><span class="p">.</span><span class="nb">next</span> <span class="o">=</span> <span class="n">cur</span>
+                <span class="n">cur</span> <span class="o">=</span> <span class="n">head</span>
+                <span class="n">head</span> <span class="o">=</span> <span class="n">tmp</span>
+                <span class="n">count</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="n">head</span> <span class="o">=</span> <span class="n">cur</span>   
+        <span class="k">return</span> <span class="n">head</span>
+</code></pre></div></div>
+
+<h3 id="贪心算法题买卖股票的最佳时机含手续费">贪心算法题:<a href="https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/">买卖股票的最佳时机含手续费</a></h3>
+
+<p>有点类似于启发算法，引入成本的概念很有意思，待补充数学证明。</p>
+
+<p>代码：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">maxProfit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prices</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">fee</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>    
+    	<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">prices</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="n">profit</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">buy</span> <span class="o">=</span> <span class="n">sold</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">price</span> <span class="ow">in</span> <span class="n">prices</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="k">if</span> <span class="n">price</span> <span class="o">&gt;=</span> <span class="n">sold</span><span class="p">:</span>
+                <span class="n">sold</span> <span class="o">=</span> <span class="n">price</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># 评估
+</span>                <span class="n">gain</span> <span class="o">=</span> <span class="n">sold</span> <span class="o">-</span> <span class="n">buy</span> <span class="o">-</span> <span class="n">fee</span>
+                <span class="c1"># 第一个条件，保证赚钱，第二个条件，经济学概念，机会成本，赚的钱必须能够弥补机会成本才是赚的。
+</span>                <span class="k">if</span> <span class="n">gain</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">gain</span> <span class="o">&gt;</span> <span class="n">price</span> <span class="o">-</span> <span class="n">buy</span><span class="p">:</span>
+                    <span class="n">profit</span> <span class="o">+=</span> <span class="n">gain</span>
+                    <span class="n">buy</span> <span class="o">=</span> <span class="n">sold</span> <span class="o">=</span> <span class="n">price</span>
+                <span class="c1"># 如果出现最低价，则尽量抛售现在的股票，给未来更多机会。
+</span>                <span class="k">elif</span> <span class="n">price</span> <span class="o">&lt;</span> <span class="n">buy</span><span class="p">:</span>
+                    <span class="n">buy</span> <span class="o">=</span> <span class="n">sold</span> <span class="o">=</span> <span class="n">price</span>
+        <span class="c1"># 时间到了，卖了赚不赚钱。
+</span>        <span class="k">if</span> <span class="n">sold</span> <span class="o">-</span> <span class="n">buy</span> <span class="o">&gt;</span> <span class="n">fee</span><span class="p">:</span>
+            <span class="n">profit</span> <span class="o">+=</span> <span class="n">sold</span> <span class="o">-</span> <span class="n">buy</span> <span class="o">-</span> <span class="n">fee</span>
+        <span class="k">return</span> <span class="n">profit</span>
+</code></pre></div></div>
+
+<p><strong>思路2</strong>：动态规划</p>
+
+<p>代码：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">maxProfit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prices</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">fee</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>    
+	    <span class="n">cash</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">hold</span> <span class="o">=</span> <span class="o">-</span><span class="n">prices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c1"># 可以看做持有股票是亏损的状态，如何让亏损最小化，就是买。
+</span>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">prices</span><span class="p">)):</span>
+            <span class="n">cash</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">cash</span><span class="p">,</span><span class="n">hold</span><span class="o">+</span><span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">fee</span><span class="p">)</span>
+            <span class="n">hold</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">hold</span><span class="p">,</span><span class="n">cash</span><span class="o">-</span><span class="n">prices</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">cash</span>
+</code></pre></div></div>
+
+<h3 id="递归树平衡二叉树">递归+树：<a href="https://leetcode-cn.com/problems/balanced-binary-tree/">平衡二叉树</a></h3>
+
+<p><strong>思路1：</strong>普通递归，自顶向下</p>
+
+<p>代码比较简单。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+	<span class="k">def</span> <span class="nf">isBalanced</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">:</span> <span class="n">TreeNode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">root</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">True</span>
+        <span class="k">return</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">height</span><span class="p">(</span><span class="n">root</span><span class="p">.</span><span class="n">left</span><span class="p">)</span><span class="o">-</span><span class="bp">self</span><span class="p">.</span><span class="n">height</span><span class="p">(</span><span class="n">root</span><span class="p">.</span><span class="n">right</span><span class="p">))</span><span class="o">&lt;=</span><span class="mi">1</span> <span class="ow">and</span> <span class="bp">self</span><span class="p">.</span><span class="n">isBalanced</span><span class="p">(</span><span class="n">root</span><span class="p">.</span><span class="n">left</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="p">.</span><span class="n">isBalanced</span><span class="p">(</span><span class="n">root</span><span class="p">.</span><span class="n">right</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">height</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">):</span>
+        <span class="c1"># 该函数是从该点为root节点的最大height
+</span>        <span class="k">if</span> <span class="n">root</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">height</span><span class="p">(</span><span class="n">root</span><span class="p">.</span><span class="n">left</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="bp">self</span><span class="p">.</span><span class="n">height</span><span class="p">(</span><span class="n">root</span><span class="p">.</span><span class="n">right</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><strong>思路2：</strong>剪枝递归，只要是不平衡子树，就$False$。从底至顶返回子树最大高度，若判定某子树不是平衡树则 “剪枝” ，直接返回。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">isBalanced</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">:</span> <span class="n">TreeNode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">recur</span><span class="p">(</span><span class="n">root</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">recur</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">root</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span> <span class="k">return</span> <span class="mi">0</span>
+        <span class="n">left</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">recur</span><span class="p">(</span><span class="n">root</span><span class="p">.</span><span class="n">left</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">left</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="n">right</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">recur</span><span class="p">(</span><span class="n">root</span><span class="p">.</span><span class="n">right</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">right</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">left</span> <span class="o">-</span> <span class="n">right</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span>
+</code></pre></div></div>
+
+<h3 id="递归树将有序数组转换为二叉搜索树">递归+树：<a href="https://leetcode-cn.com/problems/convert-sorted-array-to-binary-search-tree/">将有序数组转换为二叉搜索树</a></h3>
+
+<p><strong>思路1：</strong>树是自上而下建立的，对平衡搜索二叉树而言，做中序遍历即可得到升序数组，根节点为数组中点，即$mid = (right+left)//2, root = TreeNode(nums[mid])$。由于二叉搜索树的左右子树也为搜索树，分治递归即可。</p>
+
+<p>tips:</p>
+
+<p>对递归函数而言，最重要的就是明白当前函数应用于目标对象的目的是为了求什么，之后是否能够应用到与该目标对象有关系的，更小的目标对象。</p>
+
+<h3 id="递归树二叉树的所有路径">递归+树：<a href="https://leetcode-cn.com/problems/binary-tree-paths/">二叉树的所有路径</a></h3>
+
+<p><strong>思路：</strong>递归</p>
+
+<p>tips：</p>
+
+<p>​    （1）这道题反映，需要照顾递归函数的返回形式，这样也能作用于函数设计本身。</p>
+
+<p>​    （2）其实递归函数就是作用于主结构-&gt;子结构-&gt;终止条件，返回值从终止条件-&gt;子结构-&gt;主结构。</p>
+
+<h3 id="迭代树二叉树的中序遍历"><strong>迭代+树：</strong><a href="https://leetcode-cn.com/problems/binary-tree-inorder-traversal/">二叉树的中序遍历</a></h3>
+
+<p><strong>思路1：</strong>递归，比较常规和简单。</p>
+
+<p><strong>思路2：</strong>栈+迭代。</p>
+
+<p>前序遍历迭代算法的伪代码：根-&gt;左-&gt;右</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">stack</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">root</span>
+<span class="k">while</span> <span class="n">p</span><span class="o">!=</span> <span class="bp">None</span> <span class="ow">or</span> <span class="n">stack</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">while</span> <span class="n">p</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">p</span><span class="p">.</span><span class="n">val</span>
+       	<span class="n">p</span><span class="p">.</span><span class="n">right</span> <span class="o">-&gt;</span> <span class="n">stack</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">left</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">stack</span><span class="p">.</span><span class="n">pop</span><span class="p">()</span>
+<span class="k">return</span> <span class="n">result</span> <span class="n">about</span> <span class="n">p</span><span class="p">.</span><span class="n">val</span>
+</code></pre></div></div>
+
+<p>后序遍历迭代算法的伪代码：和上面类同，reverse（根-&gt;右-&gt;左）的结果。</p>
+
+<p>中序遍历的迭代算法伪代码：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">stack</span> 
+<span class="n">p</span> <span class="o">=</span> <span class="n">root</span>
+<span class="k">while</span> <span class="n">p</span><span class="o">!=</span> <span class="bp">None</span> <span class="ow">or</span> <span class="n">stack</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">while</span> <span class="n">p</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">-&gt;</span> <span class="n">stack</span> 
+        <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">left</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">stack</span><span class="p">.</span><span class="n">pop</span><span class="p">()</span>
+    <span class="n">p</span><span class="p">.</span><span class="n">val</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">right</span>
+<span class="k">return</span> <span class="n">result</span>
+</code></pre></div></div>
+
+<h3 id="拓扑排序课程表-ii">拓扑排序：<a href="https://leetcode-cn.com/problems/course-schedule-ii/">课程表 II</a></h3>
+
+<p><strong>思路1：</strong>课程的关系是一个有向图，用到图的算法我还不是很熟悉，所以这里只进行算法的解释，参考<a href="https://leetcode-cn.com/problems/course-schedule-ii/solution/tuo-bu-pai-xu-shen-du-you-xian-bian-li-python-dai-/">liweiwei</a>。</p>
+
+<p>首先是图的表示，这里采用邻近节点表示，即以该树为$ancestor$的所有$sucessors$所组成的集合。</p>
+
+<p>除了邻接表之外，当前课程是否可修由当前的$prerequisite$的课程个数是否为0，用一个$in_degree$数组表示，这里我一开始想的是prequisite做一个集合，其实作为条件判断，不用明确$prerequisite$是哪个，只需要知道个数就可以，这就是简化。</p>
+
+<p>python代码：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">findOrder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">numCourses</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">prerequisites</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+         <span class="c1"># 课程的长度
+</span>        <span class="n">clen</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">prerequisites</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">clen</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># 没有课程，当然可以完成课程的学习
+</span>            <span class="k">return</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numCourses</span><span class="p">)]</span>
+        <span class="c1"># 入度数组，一开始全部为 0
+</span>
+        <span class="n">in_degrees</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numCourses</span><span class="p">)]</span>
+        <span class="c1"># 邻接表
+</span>        <span class="n">adj</span> <span class="o">=</span> <span class="p">[</span><span class="nb">set</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numCourses</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">course</span><span class="p">,</span> <span class="n">pre</span> <span class="ow">in</span> <span class="n">prerequisites</span><span class="p">:</span>
+            <span class="n">in_degrees</span><span class="p">[</span><span class="n">course</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">adj</span><span class="p">[</span><span class="n">pre</span><span class="p">].</span><span class="n">add</span><span class="p">(</span><span class="n">course</span><span class="p">)</span>
+    
+        <span class="c1"># 首先遍历一遍，把所有入度为 0 的结点加入队列
+</span>        <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">queue</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numCourses</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">in_degrees</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">queue</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>    
+        <span class="k">while</span> <span class="n">queue</span><span class="p">:</span>
+            <span class="n">top</span> <span class="o">=</span> <span class="n">queue</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="c1"># 只有所有先修课程都已满足，才会把course加入到res中。
+</span>            <span class="n">res</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">top</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">successor</span> <span class="ow">in</span> <span class="n">adj</span><span class="p">[</span><span class="n">top</span><span class="p">]:</span>
+                <span class="n">in_degrees</span><span class="p">[</span><span class="n">successor</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">in_degrees</span><span class="p">[</span><span class="n">successor</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">queue</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">successor</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="o">!=</span> <span class="n">numCourses</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        <span class="k">return</span> <span class="n">res</span>
+</code></pre></div></div>
+
+<p><strong>思路2：</strong>深度优先搜索（Depth-First-Search），通过递归来判断有向图中是否有环，对当前的节点设置状态变量，如果在遍历的过程中发现该状态变量相等，即说明遍历到了同一个节点，否则没有遍历到同一个节点，对所有节点都采用这个递归过程。</p>
+
+<p>注：（访问限制）在类中，对属性的名称前加“__”，可以让内部属性不被外部访问，成为一个私有变量或者私有函数，无法在外界直接对类的信息进行修改，必须要调用类的内部函数，或者可以用”_classname__attributename”来直接访问。</p>
+
+<p>python:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">findOrder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">numCourses</span><span class="p">,</span> <span class="n">prerequisites</span><span class="p">):</span>
+        <span class="c1"># 课程的长度
+</span>        <span class="n">clen</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">prerequisites</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">clen</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numCourses</span><span class="p">)]</span>
+        <span class="c1"># 逆邻接表
+</span>        <span class="n">inverse_adj</span> <span class="o">=</span> <span class="p">[</span><span class="nb">set</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numCourses</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">second</span><span class="p">,</span> <span class="n">first</span> <span class="ow">in</span> <span class="n">prerequisites</span><span class="p">:</span>
+            <span class="n">inverse_adj</span><span class="p">[</span><span class="n">second</span><span class="p">].</span><span class="n">add</span><span class="p">(</span><span class="n">first</span><span class="p">)</span>
+
+        <span class="n">visited</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numCourses</span><span class="p">)]</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numCourses</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">__dfs</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">inverse_adj</span><span class="p">,</span> <span class="n">visited</span><span class="p">,</span> <span class="n">res</span><span class="p">):</span>
+                <span class="k">return</span> <span class="p">[]</span>
+        <span class="k">return</span> <span class="n">res</span>
+
+    <span class="k">def</span> <span class="nf">__dfs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vertex</span><span class="p">,</span> <span class="n">inverse_adj</span><span class="p">,</span> <span class="n">visited</span><span class="p">,</span> <span class="n">res</span><span class="p">):</span>
+        <span class="s">"""
+        :param visited: 记录了结点是否被访问过，2 表示当前正在 DFS 这个结点
+        """</span>
+        <span class="c1"># 2 表示这个结点正在访问，如果状态变量相同，则返回有环。
+</span>        <span class="k">if</span> <span class="n">visited</span><span class="p">[</span><span class="n">vertex</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">True</span>
+        <span class="k">if</span> <span class="n">visited</span><span class="p">[</span><span class="n">vertex</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">False</span>
+        <span class="c1"># 设置状态变量
+</span>        <span class="n">visited</span><span class="p">[</span><span class="n">vertex</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="c1"># 递归访问前驱结点
+</span>        <span class="k">for</span> <span class="n">precursor</span> <span class="ow">in</span> <span class="n">inverse_adj</span><span class="p">[</span><span class="n">vertex</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">__dfs</span><span class="p">(</span><span class="n">precursor</span><span class="p">,</span> <span class="n">inverse_adj</span><span class="p">,</span> <span class="n">visited</span><span class="p">,</span> <span class="n">res</span><span class="p">):</span>
+                <span class="k">return</span> <span class="bp">True</span>
+        <span class="c1"># 还原状态变量。
+</span>        <span class="n">visited</span><span class="p">[</span><span class="n">vertex</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="c1"># 深度优先遍历递归的目的，先把 vertex 这个结点的所有前驱结点都输出之后，再输出自己
+</span>        <span class="n">res</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">vertex</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">False</span>
+</code></pre></div></div>
+
+<h3 id="动态规划乘积最大子数组">动态规划：<a href="https://leetcode-cn.com/problems/maximum-product-subarray/">乘积最大子数组</a></h3>
+
+<p><strong>思路：</strong>两个考虑（1）如果$nums[i]&lt;0$，那么当前位置乘积最大值依赖于之前位置的乘积最小值，反之亦然。如果$nums[i]&gt;0$那么当前位置乘积最大值依赖之前位置最大值，反之亦然。（2）当前的乘积是要延续之前的状态还是要重新选取。可以写出状态转移方程，同时记录最大值。</p>
+
+\[imax = max(imax,imax*nums[i]),imin = min(imin,imin*nums[i])。\]
+
+<p>python：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">maxProduct</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">imin</span> <span class="o">=</span> <span class="n">imax</span> <span class="o">=</span> <span class="n">res</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c1"># 之所以能优化，是因为只依赖前面的值。
+</span>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">:</span>
+                <span class="n">imax</span><span class="p">,</span><span class="n">imin</span> <span class="o">=</span> <span class="n">imin</span><span class="p">,</span><span class="n">imax</span>
+            <span class="n">imax</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">imax</span><span class="o">*</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">imin</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">imin</span><span class="o">*</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">imax</span><span class="p">,</span><span class="n">res</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">res</span> 
+</code></pre></div></div>
+
+<p>注：github pages中支持latex语法,header中添加下面的代码，编辑的时候要写成latex语法。</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- 数学公式 --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"</span> <span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/x-mathjax-config"</span><span class="nt">&gt;</span>
+  <span class="nx">MathJax</span><span class="p">.</span><span class="nx">Hub</span><span class="p">.</span><span class="nx">Config</span><span class="p">({</span>
+    <span class="na">tex2jax</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">skipTags</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">script</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">noscript</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">style</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">textarea</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">pre</span><span class="dl">'</span><span class="p">],</span>
+      <span class="na">inlineMath</span><span class="p">:</span> <span class="p">[[</span><span class="dl">'</span><span class="s1">$</span><span class="dl">'</span><span class="p">,</span><span class="dl">'</span><span class="s1">$</span><span class="dl">'</span><span class="p">]]</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span>
+
+</code></pre></div></div>
+
+
+        </div>
+
+        <div class="post-readmore">
+          <a class="read-more" href="/study/leetcode-recorder-02.html">Read More</a>
+        </div>
+      </article>
+      <hr />
+      
+      <article class="post-preview">
+        <h1 class="post-title">
+          <a href="/study/leetcode-recorder-01.html">leetcode algorithm-01</a>
+        </h1>
+
+        <div class="post-info">
+          <span class="post-date">06 May 2020</span>
+           | 
+            <span class="fa fa-folder-open" aria-hidden="true">
+            
+              <a class="post-categories" href="/categories.html#study">study</a>
+            
+            </span>
+          
+           | 
+            <span class="fa fa-tag" aria-hidden="true">
+            
+              <a class="post-tags" href="/tags.html#Leetcode,">Leetcode,</a>
+            
+              <a class="post-tags" href="/tags.html#Sort">Sort</a>
+            
+            </span>
+          
+        </div>
+
+        <div class="post-excerpt">
+          <h2 id="-20200506">-2020/05/06</h2>
+
+<p><strong>题目1：<a href="https://leetcode-cn.com/problems/minimum-cost-for-tickets">最低票价</a></strong></p>
+
+<p>思路：动态规划，不同的是该题从后往前建立最优解。</p>
+
+<p>动态规划的题思路：</p>
+
+<ul>
+  <li>确定$dp[i][j][k]…$代表的含义，包括$i,j,k$代表的index是哪些部分。</li>
+  <li>最小的结构是什么，该题中的最小结构是最后的部分，所以是从最小结构开始建立。</li>
+  <li>状态转移方程是什么。该题是$dp[i] = min(cost[0]+dp[i+1], cost[1]+dp[i+7], cost[2]+dp[i+30])$。</li>
+</ul>
+
+<p><strong>题目2：<a href="https://leetcode-cn.com/problems/sort-an-array/">排序数组</a></strong></p>
+
+<p>思路：经典排序</p>
+
+<p>主要对几种排序的思路进行梳理，只是初步的一个分析，后续会再次修改。</p>
+
+<p>另外，对Bogo排序，珠排序，睡眠排序进行整理。</p>
+
+<p>注：只有比较排序，才会有$\Omega(n \log n)$的限制。</p>
+
+<ul>
+  <li>
+    <p><strong>选择排序（Selection Sort）</strong></p>
+
+    <p>思路：暴力解法。设置最小值，遍历比较，换位置，时间复杂度$O(n^2)$</p>
+
+    <p>python:</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">selection_sort</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)):</span>
+          <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)):</span>
+              <span class="k">if</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">&gt;</span><span class="n">nums</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+                  <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">nums</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">j</span><span class="p">],</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+      <span class="k">return</span> <span class="n">nums</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><strong>插入排序(Insertion Sort)</strong></p>
+
+    <p>思路：从前往后逐渐排序，选取未排序的子序列的第一个元素移动插入到排序好的子序列中合适的位置。时间复杂度$O(n^2)$</p>
+
+    <p>python:</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">insert_sort</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)):</span>
+          <span class="k">while</span> <span class="n">i</span><span class="o">&gt;</span><span class="mi">0</span> <span class="ow">and</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">&lt;</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+              <span class="n">nums</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+              <span class="n">i</span> <span class="o">-=</span> <span class="mi">1</span>
+      <span class="k">return</span> <span class="n">nums</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><strong>冒泡排序（Bubble Sort）</strong></p>
+
+    <p>思路：从后往前逐渐排序，大元素沉到数组的最后面。时间复杂度$O(n^2)$</p>
+
+    <p>python：</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">bubble_sort</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+    <span class="c1"># i表示多个元素bubble，不表示位置。
+</span>      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)):</span>
+          <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span><span class="o">-</span><span class="n">i</span><span class="p">):</span>
+              <span class="k">if</span> <span class="n">nums</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">&gt;</span><span class="n">nums</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+                  <span class="n">nums</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">nums</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">j</span><span class="p">],</span><span class="n">nums</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+      <span class="k">return</span> <span class="n">nums</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><strong>归并排序（Merge Sort）</strong></p>
+
+    <p>思路：采用分治法的思路，将序列分为最小子序列，然后一层层合并两个有序数组。时间复杂度$O(n\log n)$。注意分治法需要确定最小子单元的终止条件，例如left&lt;right，或者len(nums)==1.</p>
+
+    <p>python</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">merge_sort</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+      <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+          <span class="k">return</span> <span class="n">nums</span>
+      <span class="n">mid</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+      <span class="n">left</span> <span class="o">=</span> <span class="n">merge_sort</span><span class="p">(</span><span class="n">nums</span><span class="p">[:</span><span class="n">mid</span><span class="p">])</span>
+      <span class="n">right</span> <span class="o">=</span> <span class="n">merge_sort</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">mid</span><span class="p">:])</span>
+      <span class="c1"># 取切片效率低,也可以传入两个两个参数，将left&lt;right做为终止判定条件。
+</span>      <span class="k">return</span> <span class="n">merge</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="n">left</span><span class="p">,</span><span class="n">right</span><span class="p">):</span>
+      <span class="c1"># 利用双指针法进行合并
+</span>      <span class="n">res</span> <span class="o">=</span><span class="p">[]</span>
+      <span class="n">i</span><span class="p">,</span><span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span>
+      <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">left</span><span class="p">)</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">right</span><span class="p">):</span>
+          <span class="k">if</span> <span class="n">left</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">right</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+          <span class="n">res</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">left</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+              <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+          <span class="k">else</span><span class="p">:</span>
+              <span class="n">res</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">right</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+              <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
+      <span class="n">res</span> <span class="o">+=</span> <span class="n">left</span><span class="p">[</span><span class="n">i</span><span class="p">:]</span>
+      <span class="n">res</span> <span class="o">+=</span> <span class="n">right</span><span class="p">[</span><span class="n">j</span><span class="p">:]</span>
+      <span class="k">return</span> <span class="n">res</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><strong>快速排序（Quick Sort）</strong></p>
+
+    <p>思路：将数组分为两个部分，分别排序，最后组合。从数组中选取一个基准数（pivot），大于和小于pivot的数组分为两个部分（Partition），然后递归一直partition后合并，有点像paired-comparison。该算法时间复杂度为$O(n \log n)$。</p>
+
+    <p>python:</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">quicksort</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+      <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span><span class="o">&lt;=</span><span class="mi">1</span><span class="p">:</span>
+          <span class="k">return</span> <span class="n">nums</span>
+      <span class="n">pivot</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span><span class="p">]</span>
+      <span class="n">left</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">nums</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">pivot</span><span class="p">]</span>
+      <span class="n">middle</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">nums</span> <span class="k">if</span> <span class="n">x</span><span class="o">==</span><span class="n">pivot</span><span class="p">]</span>
+      <span class="n">right</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">nums</span> <span class="k">if</span> <span class="n">x</span><span class="o">&gt;</span><span class="n">pivot</span><span class="p">]</span>
+      <span class="k">return</span> <span class="n">quicksort</span><span class="p">(</span><span class="n">left</span><span class="p">)</span><span class="o">+</span><span class="n">middle</span><span class="o">+</span><span class="n">quicksort</span><span class="p">(</span><span class="n">right</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><strong>希尔排序（Shell sort）</strong></p>
+
+    <p>思路：针对插入排序只能将数据和邻位来比较移动一位的低效方式，希尔排序提高了移动的步长。该算法选择一个合适的增量序列，增量序列的最后一个元素为1，就是普通的插入排序。但是与普通的插入排序相比，步长较大的排序会做大部分的工作，从而降低时间复杂度。希尔排序的时间复杂度和增量序列的选择有关。可以从$O(n^{1.3})-O(n^2)$</p>
+
+    <p>python：</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">shell_sort</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+      <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+      <span class="n">gap</span> <span class="o">=</span> <span class="n">n</span><span class="o">//</span><span class="mi">2</span>
+      <span class="k">while</span> <span class="n">gap</span><span class="p">:</span>
+          <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gap</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+              <span class="k">while</span> <span class="n">i</span><span class="o">-</span><span class="n">gap</span><span class="o">&gt;=</span><span class="mi">0</span> <span class="ow">and</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="n">gap</span><span class="p">]</span><span class="o">&gt;</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+              <span class="n">nums</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">gap</span><span class="p">],</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">gap</span><span class="p">]</span>
+                  <span class="n">i</span> <span class="o">-=</span> <span class="n">gap</span>
+      <span class="n">gap</span><span class="o">//=</span><span class="mi">2</span>
+      <span class="k">return</span> <span class="n">nums</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><strong>堆排序（Heap Sort）</strong></p>
+
+    <p>思路：依照数组建堆，并把数组转换成最大堆（Max-Heap Heap），重复从最大堆中取出数值最大的结点。时间复杂度为$O(n \log n)$，建堆后主要分为以下几个步骤：</p>
+
+    <p>（1）最大堆调整，使子节点永远小于父节点从而建立最大堆</p>
+
+    <p>（2）交换堆顶和堆底元素，移出根节点，之后继续进行最大堆调整。</p>
+
+    <p>注：对堆节点的访问，在数组起始位置为0时，满足</p>
+
+    <ul>
+      <li>
+        <p>父节点$i \rightarrow 2i+1（2i+2）$左（右）子节点。</p>
+      </li>
+      <li>
+        <p>子节点$i \rightarrow \lfloor (i-1)/2 \rfloor$父节点。</p>
+      </li>
+    </ul>
+
+    <p>python：</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">heap_sort</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+      <span class="k">def</span> <span class="nf">sift_down</span><span class="p">(</span><span class="n">start</span><span class="p">,</span><span class="n">end</span><span class="p">):</span>
+          <span class="c1"># 对start元素在end节点之前找到合适的位置。
+</span>          <span class="n">root</span> <span class="o">=</span> <span class="n">start</span>
+          <span class="n">child</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">root</span> <span class="o">+</span> <span class="mi">1</span>
+          <span class="k">while</span> <span class="n">child</span><span class="o">&lt;=</span><span class="n">end</span><span class="p">:</span>
+              <span class="k">if</span> <span class="n">child</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">end</span> <span class="ow">and</span> <span class="n">nums</span><span class="p">[</span><span class="n">child</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">nums</span><span class="p">[</span><span class="n">child</span><span class="o">+</span><span class="mi">1</span><span class="p">]:</span>
+                  <span class="n">child</span> <span class="o">+=</span> <span class="mi">1</span>
+              <span class="k">if</span> <span class="n">nums</span><span class="p">[</span><span class="n">root</span><span class="p">]</span><span class="o">&lt;</span><span class="n">nums</span><span class="p">[</span><span class="n">child</span><span class="p">]:</span>
+                  <span class="n">nums</span><span class="p">[</span><span class="n">root</span><span class="p">],</span><span class="n">nums</span><span class="p">[</span><span class="n">child</span><span class="p">]</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">child</span><span class="p">],</span><span class="n">nums</span><span class="p">[</span><span class="n">root</span><span class="p">]</span>
+                  <span class="n">root</span> <span class="o">=</span> <span class="n">child</span>
+                  <span class="n">child</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">root</span> <span class="o">+</span> <span class="mi">1</span>
+              <span class="k">else</span><span class="p">:</span>
+                  <span class="k">break</span>
+              <span class="c1"># 这个地方也可以写成递归写法，一样的道理，就是重复执行。           
+</span>      <span class="c1"># 从底部开始排序得到最大堆
+</span>      <span class="k">for</span> <span class="n">start</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+          <span class="n">sift_down</span><span class="p">(</span><span class="n">start</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+      <span class="c1"># 取出堆顶元素，再次调整置换后的堆顶元素的位置。
+</span>      <span class="k">for</span> <span class="n">end</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+          <span class="n">nums</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">nums</span><span class="p">[</span><span class="n">end</span><span class="p">]</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">end</span><span class="p">],</span><span class="n">nums</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+          <span class="n">sift_down</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">end</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+      <span class="k">return</span> <span class="n">nums</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><strong>基数排序（Radix Sort）</strong></p>
+
+    <p>思路：对正整数，将所有的数统一为一样的数位长度，短数补零。从最后的（最低位）开始排序到最高位数。由于该算法比较依赖整数的位数，所以时间复杂度为$O(kn)$，其中k为位数，n为元素个数。</p>
+
+    <p>python：</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">math</span>
+<span class="k">def</span> <span class="nf">radix_sort</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span> <span class="n">radix</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+      <span class="c1"># 求该数组的最大数的位数
+</span>      <span class="n">k</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="p">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">math</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">radix</span><span class="p">)))</span>
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+          <span class="n">bucket</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">radix</span><span class="p">)]</span>
+          <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">:</span>
+              <span class="n">bucket</span><span class="p">[</span><span class="n">val</span><span class="o">%</span><span class="p">(</span><span class="n">radix</span><span class="o">**</span><span class="n">i</span><span class="p">)</span><span class="o">//</span><span class="p">(</span><span class="n">radix</span><span class="o">**</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">))].</span><span class="n">append</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+          <span class="n">nums</span> <span class="o">=</span> <span class="p">[]</span>
+          <span class="k">for</span> <span class="n">arr</span> <span class="ow">in</span> <span class="n">bucket</span><span class="p">:</span>
+              <span class="n">nums</span><span class="p">.</span><span class="n">extend</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+      <span class="k">return</span> <span class="n">nums</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><strong>计数排序</strong></p>
+
+    <p>思路：开辟额外的内存空间来存储数组元素，即通过一个最大值-最小值的数组来放置原来数组的元素。该算法的时间复杂度为$O(n+k)$，其中n为数组元素个数，k为最大最小元素差值。</p>
+
+    <p>python：</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">counting_sort</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+      <span class="n">n</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">h</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">),</span><span class="nb">min</span><span class="p">(</span><span class="n">nums</span><span class="p">),</span><span class="nb">max</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+      <span class="n">temp</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">h</span><span class="o">-</span><span class="n">l</span><span class="p">)]</span>
+      <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">:</span>
+          <span class="n">temp</span><span class="p">[</span><span class="n">num</span><span class="o">-</span><span class="n">l</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+      <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+          <span class="k">while</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span> <span class="ow">and</span> <span class="n">temp</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+              <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
+          <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">j</span> <span class="o">+</span> <span class="n">l</span>
+          <span class="n">temp</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span>
+      <span class="k">return</span> <span class="n">nums</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><strong>桶排序</strong></p>
+
+    <p>思路：如果排序的数组是均匀分布的，可以将数组分配到有限数量的桶中，对每个桶在进行排序，采用别的算法或者递归方式。桶排序其实是聚合的计数排序，复杂度是一样的。</p>
+
+    <p>python:</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">bucket_sort</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span><span class="n">bucketSize</span><span class="p">):</span>
+      <span class="n">l</span><span class="p">,</span><span class="n">h</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">nums</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+      <span class="n">bucketNum</span> <span class="o">=</span> <span class="p">(</span><span class="n">h</span><span class="o">-</span><span class="n">l</span><span class="p">)</span><span class="o">//</span><span class="n">bucketSize</span> <span class="o">+</span> <span class="mi">1</span>
+      <span class="n">buckets</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">bucketNum</span><span class="p">)]</span>
+      <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+      <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">:</span>
+          <span class="n">buckets</span><span class="p">[(</span><span class="n">num</span> <span class="o">-</span> <span class="n">l</span><span class="p">)</span> <span class="o">//</span> <span class="n">bucketSize</span><span class="p">].</span><span class="n">append</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+      <span class="k">for</span> <span class="n">bucket</span> <span class="ow">in</span> <span class="n">buckets</span><span class="p">:</span>
+          <span class="k">if</span> <span class="n">bucket</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span> 
+              <span class="k">continue</span>
+          <span class="k">else</span><span class="p">:</span>
+              <span class="n">res</span><span class="p">.</span><span class="n">extend</span><span class="p">(</span><span class="n">bucket_sort</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="n">bucketSize</span><span class="p">))</span>
+      <span class="k">return</span> <span class="n">res</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><strong>Bogo排序</strong></p>
+
+    <p>思路：将所有数字混乱一次，然后检查是否排列好，否则就再混乱一次。</p>
+
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">def</span> <span class="nf">bogo_sort</span><span class="p">(</span><span class="n">my_list</span><span class="p">):</span>
+      <span class="k">while</span> <span class="ow">not</span> <span class="n">in_order</span><span class="p">(</span><span class="n">my_list</span><span class="p">):</span>
+          <span class="n">shuffle</span><span class="p">(</span><span class="n">my_list</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+
+        </div>
+
+        <div class="post-readmore">
+          <a class="read-more" href="/study/leetcode-recorder-01.html">Read More</a>
+        </div>
+      </article>
+      <hr />
+      
+
+      
+      <nav aria-label="Page navigation">
+        <ul class="pagination">
+          
+            <li><a href="/pages2/">&laquo;</a></li>
+          
+
+          
+            
+              <li><a href="/pages2/">1</a>
+              </li>
+            
+          
+            
+              <li><a href="/pages2/">2</a></li>
+            
+          
+            
+              <li class="active"><a>3</a></li>
+            
+          
+
+          
+            <li><span>&raquo;</span></li>
+          
+        </ul>
+      </nav>
+      
+    </div>
+
+    <div class="col-md-3 main-sidebar">
+      <div class="sidebar-content" id="sidebar">
+  <div class="author-avatar">
+    <img src="/assets/img/author_avatar.jpg" alt="lszero">
+  </div>
+
+  <div class="brief-intro">
+    <div class="author-name">
+      cxcacac
+    </div>
+    <div class="author-bio">
+      Driven by curiosity, more curiosity to the essence in math, physics and computer science.
+
+    </div>
+  </div>
+
+  <nav class="site-state">
+    <div class="site-state-item">
+      <a href="/archives.html">
+        <span class="site-state-item-count">12</span>
+        <span>Posts</span>
+      </a>
+    </div>
+    <div class="site-state-item">
+      <a href="/categories.html">
+        <span class="site-state-item-count">4</span>
+        <span>Categories</span>
+      </a>
+    </div>
+    <div class="site-state-item">
+      <a href="/tags.html">
+        <span class="site-state-item-count">6</span>
+        <span>Tags</span>
+      </a>
+    </div>
+  </nav>
+
+  <div class="social-icons">
+    <a href="https://github.com/cxcacac" class="btn" title="Github" target="_blank"><i class="fa fa-fw fa-github fa-2x" aria-hidden="true"></i></a>
+    <!-- <a href="" class="btn" title="Weibo" target="_blank"><i class="fa fa-fw fa-weibo fa-2x" aria-hidden="true"></i></a> -->
+    <!-- <a href="" class="btn" title="Zhihu" target="_blank"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-stack-1x fa-inverse"><strong>知</strong></i></span></a> -->
+    <!-- <a href="" class="btn" title="Twitter" target="_blank"><i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i></a> -->
+    <!-- <a href="" class="btn" title="Lofter" target="_blank"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-stack-1x fa-inverse"><strong>L</strong></i></span></a> -->
+  </div>
+
+  <hr />
+
+  <nav class="category-list list-group">
+    <h3 class="sidebar-title">Categories</h3>
+    <ul class="list-group">
+    
+      <li class="list-group-item">
+        <a href="/categories.html#study">study</a>
+        <span class="badge">9</span>
+      </li>
+    
+      <li class="list-group-item">
+        <a href="/categories.html#study,competition">study,competition</a>
+        <span class="badge">1</span>
+      </li>
+    
+      <li class="list-group-item">
+        <a href="/categories.html#recorder">recorder</a>
+        <span class="badge">1</span>
+      </li>
+    
+      <li class="list-group-item">
+        <a href="/categories.html#competition">competition</a>
+        <span class="badge">1</span>
+      </li>
+    
+    </ul>
+  </nav>
+
+  <hr />
+
+  <nav class="tags-list">
+    <h3 class="sidebar-title">Tags</h3>
+    <ul class="list-group">
+    
+      <li class="list-group-item">
+        <a href="/tags.html#Leetcode,"> Leetcode,</a>
+        <span class="badge">2</span>
+      </li>
+    
+      <li class="list-group-item">
+        <a href="/tags.html#Sort"> Sort</a>
+        <span class="badge">1</span>
+      </li>
+    
+      <li class="list-group-item">
+        <a href="/tags.html#Leetcode"> Leetcode</a>
+        <span class="badge">9</span>
+      </li>
+    
+      <li class="list-group-item">
+        <a href="/tags.html#graph"> graph</a>
+        <span class="badge">1</span>
+      </li>
+    
+      <li class="list-group-item">
+        <a href="/tags.html#algorithm"> algorithm</a>
+        <span class="badge">1</span>
+      </li>
+    
+      <li class="list-group-item">
+        <a href="/tags.html#Python"> Python</a>
+        <span class="badge">1</span>
+      </li>
+    
+    </ul>
+  </nav>
+
+  <hr />
+
+</div>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+    <footer class="footer">
+  <div class="copyright">
+      Copyright &copy; <time datetime="2020-07-24T00:31:30+08:00">2020</time> <a href="http://localhost:4000">cxcacac</a> | Powered by <a href="https://github.com/jekyll/jekyll">Jekyll</a> | Designed by <a href="http://localhost:4000">cxcacac</a>
+  </div>
+</footer>
+
+    <a href="#top" class="back-to-top">^</a>
+
+<!--      -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="/assets/js/jquery-1.12.4.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/assets/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <!-- TOC -->
+    <script src="/assets/js/toc/TOC.js"></script>
+
+    <script>$("#search-form").submit(function(event){
+      var query = document.getElementById("search-input").value;
+      window.open("http://google.com/search?q=" + query + "%20site:" + "cxcacac.github.io");
+    });</script>
+  </body>
+</html>

@@ -1,0 +1,17 @@
+---
+layout: post
+title:  "week competition 190, personal recorder"
+date:   2020-05-24
+categories: study,competition
+tags: Leetcode
+subtitle: Two unsolved problem in competition.
+---
+
+## 5418. 二叉树中的伪回文路径
+
+这个我在当时没有搞出来怎么说一个路径是伪回文的，一直想用异或操作，看了别人的解法，是取巧了。因为节点值只有1-9，所有用一个长度为10的数组存着这些数，然后对path进行验证即可。
+
+## 5419. 两个子序列的最大点积
+
+动态规划，这里状态的选择要多一点。
+动态规划依赖的是状态之间的承接和转换。

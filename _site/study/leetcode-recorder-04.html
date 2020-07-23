@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>
+    
+      leetcode algorithm-04 &middot; My thoughts
+    
+  </title>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="/assets/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/assets/font-awesome/css/font-awesome.min.css">
+  <!-- My CSS -->
+  <link rel="stylesheet" href="/assets/main.css">
+
+  <link rel="shortcut icon" href="/img/favicon.ico">
+
+  <!-- MathJax -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      TeX: {
+        equationNumbers: {
+          autoNumber: "AMS"
+        }
+      },
+      tex2jax: {
+        inlineMath: [ ['$','$'] ],
+        displayMath: [ ['$$','$$'] ],
+        processEscapes: true,
+      }
+    });
+  </script>
+  
+
+  <!-- code highlighting-->
+  <link rel="stylesheet" href="/lib/highlight/styles/hybrid.css">
+  <script src="/lib/highlight/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script>hljs.configure({ ignore: ['text'] });</script>
+  
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+    <header class="header">
+  <!-- Navigation -->
+  <nav class="navbar navbar-default .navbar-static-top">
+    <div class="container">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/" style="color:#333">My thoughts</a>
+        <p class="navbar-text">Intuitions are better than theories with enough proficiency.</p>
+      </div>
+
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+          <li class="nav-search">
+            <form class="navbar-form navbar-left" role="search" id="search-form">
+              <div class="input-group">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit" style="color:#777">Go!</button>
+                  </span>
+                  <input type="text" id="search-input" class="form-control" placeholder="Search">
+                  
+              </div>
+            </form>
+          </li>
+          <li>
+            <a href="/archives.html">Archives</a>
+          </li>
+          <li>
+            <a href="/categories.html">Categories</a>
+          </li>
+          <li>
+            <a href="/tags.html">Tags</a>
+          </li>
+          <li>
+            <a href="/about.html">About</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+  
+    <div class="container">
+  <div class="row-fluid main">
+    <div class="col-md-9 content">
+      <article class="post">
+        <h1 class="post-title">leetcode algorithm-04</h1>
+
+        <div class="post-info">
+          <span class="post-date">02 Jun 2020</span>
+           | 
+            <span class="fa fa-folder-open" aria-hidden="true">
+            
+              <a class="post-categories" href="/categories.html#study">study</a>
+            
+            </span>
+          
+           | 
+            <span class="fa fa-tag" aria-hidden="true">
+            
+              <a class="post-tags" href="/tags.html#Leetcode">Leetcode</a>
+            
+            </span>
+          
+        </div>
+
+        <hr>
+        <div class="post-content">
+          <h1 id="leetcode刷题笔记-0603">LeetCode刷题笔记-0603</h1>
+
+<h3 id="回溯算法backtracking字母大小写全排列">回溯算法（Backtracking）：<a href="https://leetcode-cn.com/problems/letter-case-permutation/">字母大小写全排列</a></h3>
+
+<p>注：算法的理解一部分来自于<a href="https://labuladong.gitbook.io/algo/di-ling-zhang-bi-du-xi-lie/hui-su-suan-fa-xiang-jie-xiu-ding-ban">labuladong</a>.</p>
+
+<p>通用解法的步骤有点类似于BFS，都是保留一个可执行的选择列表（队列），但是<strong>回溯算法在递归调用之前做选择，在递归调用之后撤销选择。</strong></p>
+
+<p><strong>全排列问题</strong></p>
+
+<p>高中时候的排列组合，其实就是决策树的模型，固定前缀即固定决策树的前半深度，最后叶节点的个数就是全排列的个数。</p>
+
+<p>在回溯问题中，<code class="language-plaintext highlighter-rouge">1,2,3,4</code>的排列，<code class="language-plaintext highlighter-rouge">[1,2]</code>就是路径，这是已经做好的选择，后面的3,4就是可选择元素，结束条件就是可选择元素为空的时候。</p>
+
+<p>至于选择和撤销选择，在决策树模型中也很常见。</p>
+
+<p>不过有的时候术语也挺烦人。什么叫剪枝？就是知道问题是错的，马上退出来，不往下接着走。</p>
+
+<p>这里直接看一下labuladong的java代码，递归相对来说比较好理解，（函数功能，终止条件，子状态）这三个弄清楚就可以。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">List</span><span class="o">&lt;</span><span class="nc">List</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;&gt;</span> <span class="n">res</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">LinkedList</span><span class="o">&lt;&gt;();</span>
+
+<span class="cm">/* 主函数，输入一组不重复的数字，返回它们的全排列 */</span>
+<span class="nc">List</span><span class="o">&lt;</span><span class="nc">List</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;&gt;</span> <span class="nf">permute</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">nums</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nc">LinkedList</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">track</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">LinkedList</span><span class="o">&lt;&gt;();</span>
+    <span class="n">backtrack</span><span class="o">(</span><span class="n">nums</span><span class="o">,</span> <span class="n">track</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">res</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kt">void</span> <span class="nf">backtrack</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">nums</span><span class="o">,</span> <span class="nc">LinkedList</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">track</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// 结束条件</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">track</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="n">nums</span><span class="o">.</span><span class="na">length</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">res</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">LinkedList</span><span class="o">(</span><span class="n">track</span><span class="o">));</span>
+        <span class="k">return</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">nums</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+        <span class="c1">// 排除不合法的选择</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">track</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="n">nums</span><span class="o">[</span><span class="n">i</span><span class="o">]))</span>
+            <span class="k">continue</span><span class="o">;</span>
+        <span class="c1">// 做这一层的决策选择</span>
+        <span class="n">track</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">nums</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+        <span class="c1">// 进入下一层决策树</span>
+        <span class="n">backtrack</span><span class="o">(</span><span class="n">nums</span><span class="o">,</span> <span class="n">track</span><span class="o">);</span>
+        <span class="c1">// 取消选择，来获取在所有可能的选择列表中平行的决策。</span>
+        <span class="n">track</span><span class="o">.</span><span class="na">removeLast</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>总结：</p>
+
+<p>回溯算法，本质上还是暴力算法，只不过解决了连续状态的求解问题，和动态规划是有点相似的，只不过不是重叠子问题。</p>
+
+<p>回溯算法，可以用决策树来解释。</p>
+
+<ul>
+  <li>
+    <p>同一深度的决策单元是平行的，所以需要用循环来遍历。</p>
+  </li>
+  <li>在循环执行过程中，对当前的排列状态进行修改是为了往下一层深度进行递归</li>
+  <li>处理下一个平行结点，需要恢复修改前状态，再移动、修改、递归、添加，最后返回。</li>
+  <li>也可以不删除，不过要记录一下修改之前的状态，比如说下标，值等等，这里面一定要清楚修改状态。</li>
+</ul>
+
+<p>虽然算法很模板，但是因为是暴力解法，通用性很强，所以需要具体问题具体分析，常见于组合排列问题。</p>
+
+<h3 id="前缀和和可被-k-整除的子数组">前缀和：<a href="https://leetcode-cn.com/problems/subarray-sums-divisible-by-k/">和可被 K 整除的子数组</a></h3>
+
+<p>前缀和其实就是一个数学表达式：
+\(preSum[i] = A[0]+A[1]+...+	A[i]\\
+preSum[j]-preSum[i] = A[i+1]+....+A[j]\\\)
+前缀和用到了转化的想法，因为题目要求是连续数组，就换一种方式表示连续数组，通过前缀和表示连续数组的任意元素和加和。</p>
+
+<p>有点像离散化的积分和导数。</p>
+
+<h3 id="矩阵n皇后"><strong>矩阵</strong>：<a href="https://leetcode-cn.com/problems/n-queens/">N皇后</a></h3>
+
+<p>这个题，与其说是回溯法，不如说是矩阵处理算法，这个答案是借鉴评论里一个高票的答案的，主要是对矩阵的处理有所认识，虽然也很简单，认识后就是小学数学。</p>
+
+<p>矩阵最大的性质还是它的有序性，其中一条对对角线元素，在和主对角线平行的元素上，<code class="language-plaintext highlighter-rouge">x-y=const</code>，主对角线上的元素最小，两边对称。在次对角线上的所有元素，<code class="language-plaintext highlighter-rouge">x+y=const</code>，次对角线上的元素最大，之后两边对称。</p>
+
+<h3 id="位运算只出现一次的数字-ii">位运算：<a href="https://leetcode-cn.com/problems/single-number-ii/">只出现一次的数字 II</a></h3>
+
+<p>普通的异或运算：<code class="language-plaintext highlighter-rouge">1^0 = 1, 1^1 = 0</code>，这里每一位只有两个状态，因此同一个数作用也只有两个状态。</p>
+
+<p>这个题需要记录三次，那么需要三个状态，即原来的每个二进制位，再用两个二进制位表示状态。</p>
+
+<p>其中用到按位取反运算符<code class="language-plaintext highlighter-rouge">~</code>，还用到了数电中的状态转换表，得到<code class="language-plaintext highlighter-rouge">one = one ^ n &amp; ~two</code>,<code class="language-plaintext highlighter-rouge">two = two ^ n &amp; ~one</code>，因此用one，two两个变量代表状态。</p>
+
+<h3 id="位运算颠倒二进制位">位运算：<a href="https://leetcode-cn.com/problems/reverse-bits/">颠倒二进制位</a></h3>
+
+<p>几个位操作的进阶版：</p>
+
+<p><code class="language-plaintext highlighter-rouge">(n&gt;&gt;i)&amp;1</code>：为了看n的第i+1位。</p>
+
+<p><code class="language-plaintext highlighter-rouge">res|num</code>：如果res和num不存在进位的问题，就是两者的加和。</p>
+
+<p><code class="language-plaintext highlighter-rouge">num&amp;(num-1)</code>：把num的最后一位变成0，也可以说是将二进制中消去一个1.</p>
+
+<p>在C/C++中，0x表示十六进制的前缀字符，0是八位的前缀字符，十进制没有前缀字符。</p>
+
+<p>十六进制中的特殊字符：</p>
+
+<p><code class="language-plaintext highlighter-rouge">0xaaaaaaaa = 10101010101010101010101010101010 (偶数位为1，奇数位为0）</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">0x55555555 = 1010101010101010101010101010101 (偶数位为0，奇数位为1）</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">0x33333333 = 110011001100110011001100110011 (1和0每隔两位交替出现)</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">0xcccccccc = 11001100110011001100110011001100 (0和1每隔两位交替出现)</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">0x0f0f0f0f = 00001111000011110000111100001111 (1和0每隔四位交替出现)</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">0xf0f0f0f0 = 11110000111100001111000011110000 (0和1每隔四位交替出现)</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">0xffffffff</code>。</p>
+
+<p>计算机中存储数值，都是<strong>以二进制补码的形式存入的</strong>，<strong>正数的补码是他本身，负数的补码是反码加一</strong>。</p>
+
+<p>原码-反码-补码（-0）</p>
+
+<p><strong>原码：</strong>10000000000000000000000000000000 （第一位为1，后面31个0）</p>
+
+<p><strong>反码</strong>：11111111111111111111111111111111 （32个1）</p>
+
+<p><strong>补码（反码+1）</strong>：00000000000000000000000000000000 （32个0）</p>
+
+<p>因此数字原码表示的范围为11111111111111111111111111111111</p>
+
+<p>反码为1000000000000000000000000000000000，+1为补码。</p>
+
+<p>python：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">reverseBits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">32</span><span class="p">):</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">res</span><span class="o">|</span><span class="p">((</span><span class="n">n</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="mi">32</span><span class="o">-</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span><span class="o">&amp;</span><span class="mi">1</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="n">i</span>
+        <span class="k">return</span> <span class="n">res</span>
+</code></pre></div></div>
+
+<p>注：解位操作可解的题，不能单纯的背公式，要分析每一位上的<code class="language-plaintext highlighter-rouge">1或0</code>是随着位操作是如何变化的，有没有一定的规律性。</p>
+
+<h3 id="图bfsdfs克隆图">图+BFS/DFS：<a href="https://leetcode-cn.com/problems/clone-graph/">克隆图</a></h3>
+
+<p>图遍历最典型的题。</p>
+
+<p>这里直接引用<a href="https://leetcode-cn.com/problems/clone-graph/solution/dfs-he-bfs-by-powcai/">powcai</a>大佬的解释了。</p>
+
+<p>其中dfs：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">cloneGraph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="s">'Node'</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s">'Node'</span><span class="p">:</span>
+        <span class="n">visited</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="c1"># 这个visited是对原图的处理进行记录，字典存储的是图中节点在深拷贝图中对应的节点，一种map关系。
+</span>        <span class="k">def</span> <span class="nf">dfs</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">node</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="k">return</span> 
+            <span class="k">if</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">visited</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">visited</span><span class="p">[</span><span class="n">node</span><span class="p">]</span>
+            <span class="n">new</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">node</span><span class="p">.</span><span class="n">val</span><span class="p">)</span>
+            <span class="n">visited</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="n">new</span>
+            <span class="c1"># 然后对深拷贝的节点进行修改。
+</span>            <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">node</span><span class="p">.</span><span class="n">neighbors</span><span class="p">:</span>
+                <span class="n">new</span><span class="p">.</span><span class="n">neighbors</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">dfs</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">new</span>
+        <span class="k">return</span> <span class="n">dfs</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>bfs：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">cloneGraph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="s">'Node'</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s">'Node'</span><span class="p">:</span>
+        <span class="n">visited</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">def</span> <span class="nf">bfs</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">node</span><span class="p">:</span> <span class="k">return</span>
+            <span class="n">new</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">node</span><span class="p">.</span><span class="n">val</span><span class="p">)</span>
+            <span class="n">visited</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="n">new</span>  
+            <span class="n">queue</span> <span class="o">=</span> <span class="p">[</span><span class="n">node</span><span class="p">]</span>
+            <span class="k">while</span> <span class="n">queue</span><span class="p">:</span>
+                <span class="n">temp</span> <span class="o">=</span> <span class="n">queue</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">temp</span><span class="p">.</span><span class="n">neighbors</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">n</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">visited</span><span class="p">:</span>
+                        <span class="n">visited</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="n">n</span><span class="p">.</span><span class="n">val</span><span class="p">)</span>
+                        <span class="n">queue</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+                    <span class="n">visited</span><span class="p">[</span><span class="n">temp</span><span class="p">].</span><span class="n">neighbors</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">visited</span><span class="p">[</span><span class="n">n</span><span class="p">])</span>
+                    <span class="c1"># 把原图的每一个neighbors节点都拷贝到该节点的neighbors节点中，这里面已经有一部分建立了联系。
+</span>            <span class="k">return</span> <span class="n">new</span> <span class="c1"># 返回root节点。
+</span>        <span class="k">return</span> <span class="n">bfs</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="深度优先遍历dfs图课程表">深度优先遍历DFS+图：<a href="https://leetcode-cn.com/problems/course-schedule/">课程表</a></h3>
+
+<p>判断一个图中是否有环，可以用深度优先搜索的方式。</p>
+
+<p>设置一个状态量，如果在深度遍历过程中，发现状态量重合，则说明有环，否则将所有邻接节点遍历完，恢复状态变量。</p>
+
+
+        </div>
+        <br><br>
+      </article>
+
+      <nav class="post-pagination">
+        
+        <a href="/study/leetcode-recorder-03.html" class="btn previous" title="leetcode algorithm-03">&larr; leetcode algorithm-03</a>
+        
+        
+        <a href="/study/leetcode-recorder-05.html" class="btn next" title="leetcode algorithm-05">leetcode algorithm-05 &rarr;</a>
+        
+      </nav>
+
+      <hr>
+
+      
+      <aside class="related">
+        <h3>Related Posts</h3>
+        <ul class="related-posts">
+          
+            <li>
+              <a href="/study/leetcode-recorder-09.html">
+                leetcode algorithm-09
+                <small><time datetime="2020-07-01T00:00:00+08:00">01 Jul 2020</time></small>
+              </a>
+            </li>
+          
+            <li>
+              <a href="/competition/As-a-rookie-firstAK.html">
+                record of my first AK
+                <small><time datetime="2020-06-28T00:00:00+08:00">28 Jun 2020</time></small>
+              </a>
+            </li>
+          
+            <li>
+              <a href="/study/leetcode-recorder-08.html">
+                leetcode algorithm-08
+                <small><time datetime="2020-06-24T00:00:00+08:00">24 Jun 2020</time></small>
+              </a>
+            </li>
+          
+        </ul>
+      </aside>
+      
+
+      <!-- Gitment -->
+<div id="container"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: '页面 ID', // 可选。默认为 location.href
+  owner: 'lszero',
+  repo: 'lszero.github.io',
+  oauth: {
+    client_id: '5cbd280dd9b27339aee6',
+    client_secret: '18164941d46a714a7577cb7d14e642936ad2ac16',
+  },
+})
+gitment.render('container')
+</script>
+    </div>
+    
+    <div class="col-md-3 post-sidebar">
+      <div class="sidebar-content" id="sidebar">
+  <nav class="header-list-sidebar">
+    <ul id="sideNav" class="nav headers-sidenav">
+        <!-- code will be generated in TOC.js -->
+    </ul>
+  </nav>
+</div>
+    </div>
+  </div>
+</div>
+
+
+    <footer class="footer">
+  <div class="copyright">
+      Copyright &copy; <time datetime="2020-07-24T00:31:30+08:00">2020</time> <a href="http://localhost:4000">cxcacac</a> | Powered by <a href="https://github.com/jekyll/jekyll">Jekyll</a> | Designed by <a href="http://localhost:4000">cxcacac</a>
+  </div>
+</footer>
+
+    <a href="#top" class="back-to-top">^</a>
+
+<!--      -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="/assets/js/jquery-1.12.4.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/assets/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <!-- TOC -->
+    <script src="/assets/js/toc/TOC.js"></script>
+
+    <script>$("#search-form").submit(function(event){
+      var query = document.getElementById("search-input").value;
+      window.open("http://google.com/search?q=" + query + "%20site:" + "cxcacac.github.io");
+    });</script>
+  </body>
+</html>
