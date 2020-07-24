@@ -8,7 +8,7 @@ subtitle: As a rookie, My first AK in competition. ranked 130/2000.
 ---
 
 
-![image-20200630103645135](.\image\image-20200630103645135.png)
+![image-20200630103645135](\image\competition\image-20200630103645135.png)
 
-![image-20200630103656455](.\image\image-20200630103656455.png)
+![image-20200630103656455](\image\competition\image-20200630103656455.png)
 
