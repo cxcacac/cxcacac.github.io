@@ -21,22 +21,18 @@
 
   <link rel="shortcut icon" href="/favicon.ico">
 
-  <!-- MathJax -->
-  <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-      TeX: {
-        equationNumbers: {
-          autoNumber: "AMS"
-        }
-      },
-      tex2jax: {
-        inlineMath: [ ['$','$'] ],
-        displayMath: [ ['$$','$$'] ],
-        processEscapes: true,
-      }
-    });
-  </script>
-  
+<!-- MathJax -->
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+  });
+</script>
+
+
 
   <!-- code highlighting-->
   <link rel="stylesheet" href="/lib/highlight/styles/hybrid.css">
@@ -602,7 +598,7 @@ gitment.render('container')
 
     <footer class="footer">
   <div class="copyright">
-      Copyright &copy; <time datetime="2020-07-24T17:19:11+08:00">2020</time> <a href="http://localhost:4000">cxcacac</a> | Powered by <a href="https://github.com/jekyll/jekyll">Jekyll</a> | Designed by <a href="http://localhost:4000">cxcacac</a>
+      Copyright &copy; <time datetime="2020-07-24T17:24:41+08:00">2020</time> <a href="http://localhost:4000">cxcacac</a> | Powered by <a href="https://github.com/jekyll/jekyll">Jekyll</a> | Designed by <a href="http://localhost:4000">cxcacac</a>
   </div>
 </footer>
 
