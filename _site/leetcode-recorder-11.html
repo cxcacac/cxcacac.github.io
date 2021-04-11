@@ -1,0 +1,173 @@
+<h3 id="原地快速排序">原地快速排序</h3>
+
+<p>快速排序如果每次都申请数组，用递归来做，是很简单的。找一个pivot，then compare, allocate to an array.</p>
+
+<p>reference:https://magiclen.org/hackerrank-quicksort-in-place/</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+</code></pre></div></div>
+
+<h3 id="python函数mapzipallany">python函数：map,zip,all,any</h3>
+
+<p><a href="https://leetcode-cn.com/problems/check-if-a-string-can-break-another-string/">Check If a String Can Break Another String</a></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">checkIfCanBreak</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s1</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">s2</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">s1</span><span class="p">,</span> <span class="n">s2</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">s1</span><span class="p">),</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">s2</span><span class="p">)</span>
+        <span class="n">check</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="p">((</span><span class="n">a</span> <span class="o">&gt;=</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">&lt;=</span> <span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="nb">any</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">all</span><span class="p">,</span> <span class="n">check</span><span class="p">))</span>  
+</code></pre></div></div>
+
+<p>判断是否全为正，或者全为负。</p>
+
+<h3 id="模拟插入区间insert-interval">模拟插入区间：<a href="https://leetcode-cn.com/problems/insert-interval/">Insert Interval</a></h3>
+
+<p>思路：用left和right表示插入后区间的变化，用left，right和区间的左右边界的关系判断是否overlap.</p>
+
+<p>对两个区间而言，overlap则意味着除了left&gt;interval[1], right&lt;interval[0]的情况之外，根据overlap的情况不断更新left和right的值。</p>
+
+<p>是一个流动的模拟。</p>
+
+<h3 id="dfs和bfs建图处理字符word-ladder">dfs和bfs建图处理字符：<a href="https://leetcode-cn.com/problems/word-ladder/">Word Ladder</a></h3>
+
+<p>思路：对于string接龙问题，如果只有一个字符的改变，可以创造虚拟节点，从而实现穷举的目的。</p>
+
+<p>通过建图表示字符串之间的联系，将所有的字符串中间加入虚拟节点”string1+*+string2”。</p>
+
+<p>使用BFS遍历图，其中对于已经遍历过的节点，直接用distant[word]进行判断，这在dfs遍历中也很常见，不用再做visited数组进行判断。</p>
+
+<p>建立节点和关系：</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">addWord</span><span class="p">(</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">word</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">wordId</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">word</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">wordId</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">=</span> <span class="n">nodeNum</span><span class="o">++</span><span class="p">;</span>
+        <span class="n">edge</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="nf">addEdge</span><span class="p">(</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">word</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">addWord</span><span class="p">(</span><span class="n">word</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">id1</span> <span class="o">=</span> <span class="n">wordId</span><span class="p">[</span><span class="n">word</span><span class="p">];</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">char</span><span class="o">&amp;</span> <span class="n">it</span> <span class="o">:</span> <span class="n">word</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">char</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">it</span><span class="p">;</span>
+        <span class="n">it</span> <span class="o">=</span> <span class="sc">'*'</span><span class="p">;</span>
+        <span class="n">addWord</span><span class="p">(</span><span class="n">word</span><span class="p">);</span>
+        <span class="kt">int</span> <span class="n">id2</span> <span class="o">=</span> <span class="n">wordId</span><span class="p">[</span><span class="n">word</span><span class="p">];</span>
+        <span class="n">edge</span><span class="p">[</span><span class="n">id1</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="n">id2</span><span class="p">);</span>
+        <span class="n">edge</span><span class="p">[</span><span class="n">id2</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="n">id1</span><span class="p">);</span>
+        <span class="n">it</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>最后由于完整的distance中，有axbxcxd的形式，所以最后结果res=distance/2+1;</p>
+
+<h3 id="自定义sort函数count-bitsjavacsort-integers-by-the-number-of-1-bits">自定义sort函数/count bits（java/c++）：<a href="https://leetcode-cn.com/problems/sort-integers-by-the-number-of-1-bits/">Sort Integers by The Number of 1 Bits</a></h3>
+
+<p>思路：该题的思路并不难，关键在于一些小的点怎么用。</p>
+
+<p>count bits api的两个角度.</p>
+
+<p>直接cnt;</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">while</span><span class="p">(</span><span class="n">x</span><span class="p">){</span>
+    <span class="n">cnt</span><span class="o">+=</span><span class="n">x</span><span class="o">&amp;</span><span class="mi">1</span><span class="p">;</span>
+    <span class="n">x</span><span class="o">&gt;&gt;=</span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// 函数也可以写成：</span>
+<span class="k">while</span><span class="p">(</span><span class="n">x</span><span class="p">){</span>
+    <span class="n">cnt</span><span class="o">+=</span><span class="p">(</span><span class="n">x</span><span class="o">%</span><span class="mi">2</span><span class="p">);</span>
+    <span class="n">x</span><span class="o">/=</span><span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>采用递推：bit[i]=bit[i»1]+(i&amp;1)，在该递推中x的范围应该有所限制。</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">bit</span><span class="p">(</span><span class="mi">10001</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">10001</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+    <span class="n">bit</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">bit</span><span class="p">[</span><span class="n">i</span><span class="o">&gt;&gt;</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="p">(</span><span class="n">i</span><span class="o">&amp;</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>还有一个点就是关于java和c++自定义排序的问题，主要关注其中的匿名函数写法。</p>
+
+<p>先看普通函数的写法，关于升序排序。c++</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">bool</span> <span class="nf">cmp</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">){</span>
+    <span class="kt">int</span> <span class="n">numa</span><span class="o">=</span><span class="n">count</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">numb</span><span class="o">=</span><span class="n">count</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">numa</span><span class="o">!=</span><span class="n">numb</span><span class="o">?</span> <span class="n">numa</span><span class="o">&lt;</span><span class="n">numb</span><span class="o">:</span> <span class="n">a</span><span class="o">&lt;</span><span class="n">b</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="n">sort</span><span class="p">(</span><span class="n">arr</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">arr</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">cmp</span><span class="p">);</span>
+<span class="k">return</span> <span class="n">arr</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>匿名函数：</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">bit</span><span class="p">(</span><span class="mi">10001</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="k">for</span><span class="p">(</span><span class="k">auto</span> <span class="n">x</span><span class="o">:</span> <span class="n">arr</span><span class="p">){</span>
+	<span class="n">bit</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="o">=</span><span class="n">count</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="n">sort</span><span class="p">(</span><span class="n">arr</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">arr</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span><span class="kt">int</span> <span class="n">y</span><span class="p">){</span>
+	<span class="k">if</span><span class="p">(</span><span class="n">bit</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="o">&lt;</span><span class="n">bit</span><span class="p">[</span><span class="n">y</span><span class="p">])</span> <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">bit</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="o">&gt;</span><span class="n">bit</span><span class="p">[</span><span class="n">y</span><span class="p">])</span> <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">&lt;</span><span class="n">y</span><span class="p">;</span>
+<span class="p">});</span>
+<span class="k">return</span> <span class="n">arr</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>java</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span><span class="o">[]</span> <span class="n">bit</span><span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="mi">10001</span><span class="o">];</span>
+<span class="nc">List</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;();</span>
+<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="nl">x:</span> <span class="n">arr</span><span class="o">){</span>
+    <span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">x</span><span class="o">);</span>
+    <span class="n">bit</span><span class="o">[</span><span class="n">x</span><span class="o">]=</span><span class="n">count</span><span class="o">(</span><span class="n">x</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="c1">// collections.sort对应的对象是list.</span>
+<span class="nc">Collections</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">list</span><span class="o">,</span> <span class="k">new</span> <span class="nc">Comparator</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;(){</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">compare</span><span class="o">(</span><span class="nc">Integer</span> <span class="n">x</span><span class="o">,</span> <span class="nc">Integer</span> <span class="n">y</span><span class="o">){</span>
+        <span class="c1">// 前面的小，后面的大。</span>
+        <span class="k">return</span> <span class="n">bit</span><span class="o">[</span><span class="n">x</span><span class="o">]!=</span><span class="n">bit</span><span class="o">[</span><span class="n">y</span><span class="o">]?</span> <span class="n">bit</span><span class="o">[</span><span class="n">x</span><span class="o">]-</span><span class="n">bit</span><span class="o">[</span><span class="n">y</span><span class="o">]:</span><span class="n">x</span><span class="o">-</span><span class="n">y</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">})</span>
+</code></pre></div></div>
+
+<p>匿名函数：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Arrays</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">nums</span><span class="o">,</span> <span class="o">(</span><span class="n">o1</span><span class="o">,</span> <span class="n">o2</span><span class="o">)-&gt;{</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">count</span><span class="o">(</span><span class="n">o1</span><span class="o">);</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">count</span><span class="o">(</span><span class="n">o2</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">a</span><span class="o">==</span><span class="n">b</span><span class="o">?</span> <span class="n">o1</span><span class="o">-</span><span class="nl">o2:</span> <span class="n">a</span><span class="o">-</span><span class="n">b</span><span class="o">;</span>
+<span class="o">})</span>
+</code></pre></div></div>
+
+<h3 id="数组处理31-next-permutation">数组处理：<a href="https://leetcode-cn.com/problems/next-permutation/">31. Next Permutation</a></h3>
+
+<p>思路：如果对一个数组而言，找到小于当前的元素，可以直接遍历，从左到右，找到第一个非升序或者非降序的元素，看该元素有何特征。</p>
+
+<h3 id="贪心动态规划514-freedom-trail">贪心/动态规划：<a href="https://leetcode-cn.com/problems/freedom-trail/">514. Freedom Trail</a></h3>
+
+<p>思路：一开始认为应该用贪心来解，但是贪心有本质上的缺点，它和动态规划的区别在于，贪心如果是正确的解，那么它每一步的解应该都能证明是最优解。如果是动态规划的话，前面的解不一定是最优解，我可以用数组来存储当前状态下的解，一步步递进求出全局最优解。</p>
+
+<h3 id="单调栈402-remove-k-digits">单调栈：<a href="https://leetcode-cn.com/problems/remove-k-digits/">402. Remove K Digits</a></h3>
+
+<p>单调栈主要就是维护数组元素的单调关系，最常见的操作就是不断地pop和push，如下：</p>
+
+<p><strong>对于每个数字，如果该数字小于栈顶元素，我们就不断地弹出栈顶元素，直到</strong></p>
+
+<ul>
+  <li><strong>栈为空</strong></li>
+  <li><strong>或者新的栈顶元素不大于当前数字</strong></li>
+  <li><strong>或者我们已经删除了k位数字</strong></li>
+</ul>
+
+<p>不同于优先队列（堆），这里的栈顶元素：</p>
+
+<ul>
+  <li>是序列的前一个元素（pop操作之后的）</li>
+  <li>也是前面的元素的最大值/最小值</li>
+  <li>保持了序列中的相对前后关系</li>
+</ul>
+
+<p>单调栈一般可以保持在O(n)的时间复杂度内。</p>
+

@@ -1,0 +1,92 @@
+<h3 id="排序贪心406-queue-reconstruction-by-height">排序+贪心：<a href="https://leetcode-cn.com/problems/queue-reconstruction-by-height/">406. Queue Reconstruction by Height</a></h3>
+
+<p>思路：对于有序数列，可能会存在放入前后的问题。因此进行排序后，可以得到有序数列，对有序数列判断简单操作是否具有全局最优解，若有，就是贪心。</p>
+
+<p>tip：有时候遍历一遍比map更管用，反而用map需要各种条件，限制住了手脚。</p>
+
+<h3 id="桶排序1030-matrix-cells-in-distance-order">桶排序：<a href="https://leetcode-cn.com/problems/matrix-cells-in-distance-order/">1030. Matrix Cells in Distance Order</a></h3>
+
+<p>思路：可以用自定义排序，也可以使用桶排序，因为桶排序的时间复杂度要低。</p>
+
+<p>桶排序的思想就是你需要先明确这些元素最大值最小值的个数，一旦确定，之后再进行分桶。</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="kt">int</span> <span class="n">dist</span><span class="p">(</span><span class="kt">int</span> <span class="n">r1</span><span class="p">,</span> <span class="kt">int</span> <span class="n">c1</span><span class="p">,</span> <span class="kt">int</span> <span class="n">r2</span><span class="p">,</span> <span class="kt">int</span> <span class="n">c2</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">abs</span><span class="p">(</span><span class="n">r1</span> <span class="o">-</span> <span class="n">r2</span><span class="p">)</span> <span class="o">+</span> <span class="n">abs</span><span class="p">(</span><span class="n">c1</span> <span class="o">-</span> <span class="n">c2</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">allCellsDistOrder</span><span class="p">(</span><span class="kt">int</span> <span class="n">R</span><span class="p">,</span> <span class="kt">int</span> <span class="n">C</span><span class="p">,</span> <span class="kt">int</span> <span class="n">r0</span><span class="p">,</span> <span class="kt">int</span> <span class="n">c0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">maxDist</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">r0</span><span class="p">,</span> <span class="n">R</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">r0</span><span class="p">)</span> <span class="o">+</span> <span class="n">max</span><span class="p">(</span><span class="n">c0</span><span class="p">,</span> <span class="n">C</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">c0</span><span class="p">);</span>
+        <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&gt;</span> <span class="n">bucket</span><span class="p">(</span><span class="n">maxDist</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">R</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">C</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="kt">int</span> <span class="n">d</span> <span class="o">=</span> <span class="n">dist</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">r0</span><span class="p">,</span> <span class="n">c0</span><span class="p">);</span>
+                <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">tmp</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">};</span>
+                <span class="n">bucket</span><span class="p">[</span><span class="n">d</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="n">move</span><span class="p">(</span><span class="n">tmp</span><span class="p">));</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        
+        <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">ret</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">maxDist</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="n">it</span> <span class="o">:</span> <span class="n">bucket</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">{</span>
+                <span class="n">ret</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">it</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h3 id="数组的双指针-快慢性质283-move-zeroes">数组的双指针-快慢性质：<a href="https://leetcode-cn.com/problems/move-zeroes/">283. Move Zeroes</a></h3>
+
+<p>思路：虽然是简单题，但是用双指针的话，能反映出来数组处理的一些奇妙之处。</p>
+
+<p>可以采用<code class="language-plaintext highlighter-rouge">i,j</code>双指针，其中<code class="language-plaintext highlighter-rouge">j</code>是用来遍历的，<code class="language-plaintext highlighter-rouge">i</code>是用来记录第一个0的位置的。</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="kt">void</span> <span class="n">moveZeroes</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">nums</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+        <span class="k">while</span><span class="p">(</span><span class="n">j</span><span class="o">&lt;</span><span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">()){</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">j</span><span class="p">]){</span>
+                <span class="n">swap</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="o">++</span><span class="p">]);</span>
+            <span class="p">}</span>
+            <span class="n">j</span><span class="o">++</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>这里面有点动态规划的思想，因为<code class="language-plaintext highlighter-rouge">j</code>是快指针，能保证它处理过的元素没有零，因为初始条件决定的。</p>
+
+<p>这里面的指针有两个性质：</p>
+
+<ul>
+  <li>左指针左边均为非零数；</li>
+  <li>右指针左边直到左指针处均为零。</li>
+</ul>
+
+<h3 id="排序贪心452-minimum-number-of-arrows-to-burst-balloons">排序+贪心：<a href="https://leetcode-cn.com/problems/minimum-number-of-arrows-to-burst-balloons/">452. Minimum Number of Arrows to Burst Balloons</a></h3>
+
+<p>思路：排序贪心，最重要的就是确定贪心想法，之后根据元素排序确定处理先后关系（这与从前向后处理或从后向前处理有关），从而验证贪心的至少最优解正确性。</p>
+
+<p>和其他合并区间类的题目套路一样, 都是贪心思想, 先排序, 然后遍历检查是否满足合并区间的条件。</p>
+
+<p>比如该题，贪心就是对单个气球而言，尽可能把箭设置在右边，从而能够让其尽可能照顾到所有元素，并可以通过数学归纳与反证法验证贪心关系。</p>
+
+<h3 id="完全二叉树位运算222-count-complete-tree-nodes">完全二叉树+位运算：<a href="https://leetcode-cn.com/problems/count-complete-tree-nodes/">222. Count Complete Tree Nodes</a></h3>
+
+<p>思路：对于最大层数为h的完全二叉树，节点个数在$[2^h, 2^{h+1}-1]$之间，可以通过二分查找的方式得到完全二叉树的节点个数。</p>
+
+<p>完全二叉树和二进制也有关系，如果第K个节点位于第h层（root节点在第0层），那么k的二进制包括h+1位，最左边的元素为10000….，之后依次加一。</p>
+
+<p>因此对二进制而言，0可以表示上一个根节点转到了左节点，1可以表示为上一个根节点转到了右节点。因此该节点与上一节点的关系就是$val_{root}«1 + 0/1$.</p>
+
+<h3 id="分治哈希454-4sum-ii">分治+哈希：<a href="https://leetcode-cn.com/problems/4sum-ii/">454. 4Sum II</a></h3>
+
+<p>思路：这里有四组，分开处理，其他的和Two sum的思路是一样的，主要是分治的思想来减少时间复杂度，如果没有分治好，就是$O(n^2-n^3)$的时间复杂度。</p>
+
+<p>教训：不要记题，记题会让你的思路僵化，一开始的路就走错了。</p>
+

@@ -1,0 +1,176 @@
+I"Xn<h3 id="基数排序164-maximum-gap">基数排序：<a href="https://leetcode-cn.com/problems/maximum-gap/">164. Maximum Gap</a></h3>
+
+<p>题思路：主要是排序算法满足$O(N)$时间复杂度的要求，只有基数排序和桶排序，这里主要复习一下基数排序的内容。</p>
+
+<p><strong>基数排序</strong>：</p>
+
+<p>思路：将所有待比较数值（正整数）统一为同样的数位长度，数位较短的数前面补零。然后，从最低位开始，依次进行一次排序。这样从最低位排序一直到最高位排序完成以后，数列就变成一个有序序列。</p>
+
+<p>基数排序的方式可以采用LSD（Least significant digital）或MSD（Most significant digital），LSD的排序方式由键值的最右边开始，而MSD则相反，由键值的最左边开始。这种排序方式要和数组更新方式，遍历数组的方式保持一致性。</p>
+
+<p>基数排序一般要快过基于比较的排序，比如快速排序，但是也要看比较的位数和n的大小关系，而且基数排序适用于整数排序，应用场景比较受限。</p>
+
+<p>Radix sort API:</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">buffer</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+<span class="kt">int</span> <span class="n">exp</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">maximum</span> <span class="o">=</span> <span class="o">*</span><span class="n">max_element</span><span class="p">(</span><span class="n">nums</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">nums</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+
+<span class="k">while</span><span class="p">(</span><span class="n">exp</span> <span class="o">&lt;=</span> <span class="n">maximum</span><span class="p">){</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">cnt</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="o">&amp;</span> <span class="n">num</span><span class="o">:</span><span class="n">nums</span><span class="p">){</span>
+        <span class="c1">// for内的变量也是局部变量。</span>
+        <span class="kt">int</span> <span class="n">digit</span> <span class="o">=</span> <span class="p">(</span><span class="n">num</span><span class="o">/</span><span class="n">exp</span><span class="p">)</span><span class="o">%</span><span class="mi">10</span><span class="p">;</span>
+        <span class="n">cnt</span><span class="p">[</span><span class="n">digit</span><span class="p">]</span><span class="o">++</span><span class="p">;</span> 
+    <span class="p">}</span>
+    <span class="c1">// 关键是按基数的位置再次排数据。</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">10</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="n">cnt</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+=</span><span class="n">cnt</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+    <span class="p">}</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="n">i</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">--</span><span class="p">){</span>
+        <span class="kt">int</span> <span class="n">digit</span> <span class="o">=</span> <span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="n">exp</span><span class="p">)</span><span class="o">%</span><span class="mi">10</span><span class="p">;</span>
+        <span class="c1">// 放到当前digit对应的最后一个元素的位置，然后再--；</span>
+       	<span class="c1">// 即先处理的大的元素，是放在最后面。</span>
+        <span class="n">buffer</span><span class="p">[</span><span class="n">cnt</span><span class="p">[</span><span class="n">digit</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="n">cnt</span><span class="p">[</span><span class="n">digit</span><span class="p">]</span><span class="o">--</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">copy</span><span class="p">(</span><span class="n">buffer</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">buffer</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">nums</span><span class="p">.</span><span class="n">begin</span><span class="p">());</span>
+    <span class="n">exp</span><span class="o">*=</span><span class="mi">10</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="归并排序493-reverse-pairs">归并排序：<a href="https://leetcode-cn.com/problems/reverse-pairs/">493. Reverse Pairs</a></h3>
+
+<p>思路：归并排序的基本思路还是分治法，该题可以用分治法来处理。也可以说归并排序就是在分治的时候创建sorted数组，根据分治的结果双指针填满sorted数组，然后将sorted数组对原数组进行修改，使原数组满足有序性。</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">reversePairsRecursive</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">nums</span><span class="p">,</span> <span class="kt">int</span> <span class="n">left</span><span class="p">,</span> <span class="kt">int</span> <span class="n">right</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">left</span> <span class="o">==</span> <span class="n">right</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">left</span> <span class="o">+</span> <span class="n">right</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">n1</span> <span class="o">=</span> <span class="n">reversePairsRecursive</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">mid</span><span class="p">);</span>
+        <span class="kt">int</span> <span class="n">n2</span> <span class="o">=</span> <span class="n">reversePairsRecursive</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">right</span><span class="p">);</span>
+        <span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">n1</span> <span class="o">+</span> <span class="n">n2</span><span class="p">;</span>
+
+        <span class="c1">// 首先统计下标对的数量</span>
+        <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">left</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;=</span> <span class="n">mid</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">while</span> <span class="p">(</span><span class="n">j</span> <span class="o">&lt;=</span> <span class="n">right</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="kt">long</span> <span class="kt">long</span><span class="p">)</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="kt">long</span> <span class="kt">long</span><span class="p">)</span><span class="n">nums</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="n">j</span><span class="o">++</span><span class="p">;</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="p">(</span><span class="n">j</span> <span class="o">-</span> <span class="n">mid</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+            <span class="n">i</span><span class="o">++</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// 随后合并两个排序数组</span>
+        <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">sorted</span><span class="p">(</span><span class="n">right</span> <span class="o">-</span> <span class="n">left</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+        <span class="kt">int</span> <span class="n">p1</span> <span class="o">=</span> <span class="n">left</span><span class="p">,</span> <span class="n">p2</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">p</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">p1</span> <span class="o">&lt;=</span> <span class="n">mid</span> <span class="o">||</span> <span class="n">p2</span> <span class="o">&lt;=</span> <span class="n">right</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">p1</span> <span class="o">&gt;</span> <span class="n">mid</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">sorted</span><span class="p">[</span><span class="n">p</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">p2</span><span class="o">++</span><span class="p">];</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">p2</span> <span class="o">&gt;</span> <span class="n">right</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">sorted</span><span class="p">[</span><span class="n">p</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">p1</span><span class="o">++</span><span class="p">];</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">p1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">nums</span><span class="p">[</span><span class="n">p2</span><span class="p">])</span> <span class="p">{</span>
+                    <span class="n">sorted</span><span class="p">[</span><span class="n">p</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">p1</span><span class="o">++</span><span class="p">];</span>
+                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                    <span class="n">sorted</span><span class="p">[</span><span class="n">p</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">p2</span><span class="o">++</span><span class="p">];</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">sorted</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">nums</span><span class="p">[</span><span class="n">left</span> <span class="o">+</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">sorted</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="贪心861-score-after-flipping-matrix">贪心：<a href="https://leetcode-cn.com/problems/score-after-flipping-matrix/">861. Score After Flipping Matrix</a></h3>
+
+<p>思路：分析该问题的特征，确保前面的元素权重是恒大于后面元素的权重，就可以用贪心处理。进制问题一般都有前面的元素恒大于后面的所有元素的最利情况，所以可以用贪心处理。</p>
+
+<h3 id="回溯842-split-array-into-fibonacci-sequence">回溯：<a href="https://leetcode-cn.com/problems/split-array-into-fibonacci-sequence/">842. Split Array into Fibonacci Sequence</a></h3>
+
+<p>思路：根据状态进行判定和枚举，标准的回溯法。在c++中，回溯法要记得留终结状态的数据，不然就是list.push_back之后list.pop_back，回溯完成就return; 什么都没有留下。</p>
+
+<h3 id="贪心621-task-scheduler">贪心：<a href="https://leetcode-cn.com/problems/task-scheduler/">621. Task Scheduler</a></h3>
+
+<p>思路：贪心，选择对当前任务而言，出现频次最高的任务，可以证明为最优解。</p>
+
+<p>证明：</p>
+
+<p>贪心的数学归纳反证法思路：（1）证明选择与当前贪心不同的策略，总target函数只会变成最优解及以下。（2）证明当前选择用贪心策略，可以至少得到比当前解更优的决策。</p>
+
+<p>这里采用模拟的思路，当用模拟的思路时，每个元素都必须有一个状态，来表征元素和当前进程的关系，可以在合适的时候处理元素，比如该题有（nextValidTime, rest）来表示当前的状态。</p>
+
+<h3 id="前缀和归并排序327-count-of-range-sum">前缀和+归并排序：<a href="https://leetcode-cn.com/problems/count-of-range-sum/">327. Count of Range Sum</a></h3>
+
+<p>思路：对于连续区间的加和满足要求的问题，一般都采用前缀和的思路，但是前缀和的时间复杂度是$O(n^2)$。</p>
+
+<p>前缀和将连续区间转换为下标的问题，即元素之间的相对位置是不变的，最后结果就是不变的。</p>
+
+<p>利用归并排序，子结构的相对位置关系，可以优化时间复杂度，对当前结构的归并排序而言，其子结构<code class="language-plaintext highlighter-rouge">left-mid, mid-right</code>都是已经排好序的，所以在操作子结构时需要进行假设，但是最后需要对有序子结构进行合并。</p>
+
+<p>NOTE: 为了使前缀和<code class="language-plaintext highlighter-rouge">pre[j]-pre[i]=sum(arr[i]+...+arr[j-1])</code>满足要求，需要使pre[0]=0，即前缀和的一个元素是人为添加的0。</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="kt">int</span> <span class="n">countRangeSumRecursive</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">long</span><span class="o">&gt;&amp;</span> <span class="n">sum</span><span class="p">,</span> <span class="kt">int</span> <span class="n">lower</span><span class="p">,</span> <span class="kt">int</span> <span class="n">upper</span><span class="p">,</span> <span class="kt">int</span> <span class="n">left</span><span class="p">,</span> <span class="kt">int</span> <span class="n">right</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">left</span> <span class="o">==</span> <span class="n">right</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">left</span> <span class="o">+</span> <span class="n">right</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+            <span class="kt">int</span> <span class="n">n1</span> <span class="o">=</span> <span class="n">countRangeSumRecursive</span><span class="p">(</span><span class="n">sum</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">mid</span><span class="p">);</span>
+            <span class="kt">int</span> <span class="n">n2</span> <span class="o">=</span> <span class="n">countRangeSumRecursive</span><span class="p">(</span><span class="n">sum</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">,</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">right</span><span class="p">);</span>
+            <span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">n1</span> <span class="o">+</span> <span class="n">n2</span><span class="p">;</span>
+
+            <span class="c1">// 首先统计下标对的数量</span>
+            <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">left</span><span class="p">;</span>
+            <span class="kt">int</span> <span class="n">l</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="kt">int</span> <span class="n">r</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="k">while</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;=</span> <span class="n">mid</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">while</span> <span class="p">(</span><span class="n">l</span> <span class="o">&lt;=</span> <span class="n">right</span> <span class="o">&amp;&amp;</span> <span class="n">sum</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">-</span> <span class="n">sum</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">lower</span><span class="p">)</span> <span class="n">l</span><span class="o">++</span><span class="p">;</span>
+                <span class="c1">// r不满足要求</span>
+                <span class="k">while</span> <span class="p">(</span><span class="n">r</span> <span class="o">&lt;=</span> <span class="n">right</span> <span class="o">&amp;&amp;</span> <span class="n">sum</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">-</span> <span class="n">sum</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">upper</span><span class="p">)</span> <span class="n">r</span><span class="o">++</span><span class="p">;</span>
+                <span class="n">ret</span> <span class="o">+=</span> <span class="p">(</span><span class="n">r</span> <span class="o">-</span> <span class="n">l</span><span class="p">);</span>
+                <span class="n">i</span><span class="o">++</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="c1">// 随后合并两个排序数组</span>
+            <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">sorted</span><span class="p">(</span><span class="n">right</span> <span class="o">-</span> <span class="n">left</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+            <span class="kt">int</span> <span class="n">p1</span> <span class="o">=</span> <span class="n">left</span><span class="p">,</span> <span class="n">p2</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="kt">int</span> <span class="n">p</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+            <span class="k">while</span> <span class="p">(</span><span class="n">p1</span> <span class="o">&lt;=</span> <span class="n">mid</span> <span class="o">||</span> <span class="n">p2</span> <span class="o">&lt;=</span> <span class="n">right</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">p1</span> <span class="o">&gt;</span> <span class="n">mid</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">sorted</span><span class="p">[</span><span class="n">p</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">sum</span><span class="p">[</span><span class="n">p2</span><span class="o">++</span><span class="p">];</span>
+                <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">p2</span> <span class="o">&gt;</span> <span class="n">right</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">sorted</span><span class="p">[</span><span class="n">p</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">sum</span><span class="p">[</span><span class="n">p1</span><span class="o">++</span><span class="p">];</span>
+                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">sum</span><span class="p">[</span><span class="n">p1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">sum</span><span class="p">[</span><span class="n">p2</span><span class="p">])</span> <span class="p">{</span>
+                        <span class="n">sorted</span><span class="p">[</span><span class="n">p</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">sum</span><span class="p">[</span><span class="n">p1</span><span class="o">++</span><span class="p">];</span>
+                    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                        <span class="n">sorted</span><span class="p">[</span><span class="n">p</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">sum</span><span class="p">[</span><span class="n">p2</span><span class="o">++</span><span class="p">];</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">sorted</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">sum</span><span class="p">[</span><span class="n">left</span> <span class="o">+</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">sorted</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kt">int</span> <span class="n">countRangeSum</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">nums</span><span class="p">,</span> <span class="kt">int</span> <span class="n">lower</span><span class="p">,</span> <span class="kt">int</span> <span class="n">upper</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">long</span> <span class="n">s</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="n">vector</span><span class="o">&lt;</span><span class="kt">long</span><span class="o">&gt;</span> <span class="n">sum</span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+        <span class="k">for</span><span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="n">v</span><span class="o">:</span> <span class="n">nums</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="n">v</span><span class="p">;</span>
+            <span class="n">sum</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">countRangeSumRecursive</span><span class="p">(</span><span class="n">sum</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sum</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+:ET

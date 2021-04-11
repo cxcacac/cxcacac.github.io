@@ -1,4 +1,4 @@
-I"|<h2 id="-20200506">-2020/05/06</h2>
+I"�|<h2 id="-20200506">-2020/05/06</h2>
 
 <p><strong>题目1：<a href="https://leetcode-cn.com/problems/minimum-cost-for-tickets">最低票价</a></strong></p>
 
@@ -36,6 +36,11 @@
               <span class="k">if</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">&gt;</span><span class="n">nums</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
                   <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">nums</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">j</span><span class="p">],</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
       <span class="k">return</span> <span class="n">nums</span>
+</code></pre></div>    </div>
+
+    <p>c++：</p>
+
+    <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  
 </code></pre></div>    </div>
   </li>
   <li>

@@ -1,0 +1,164 @@
+I"�A<h3 id="动态规划二分">动态规划+二分</h3>
+
+<p>三道题：</p>
+
+<p><a href="https://leetcode-cn.com/problems/russian-doll-envelopes/">354. 俄罗斯套娃信封问题</a>、<a href="https://leetcode-cn.com/problems/number-of-longest-increasing-subsequence/">673. 最长递增子序列的个数</a>。</p>
+
+<p><a href="https://leetcode-cn.com/problems/maximum-length-of-pair-chain/">646. Maximum Length of Pair Chain</a></p>
+
+<h3 id="robin-karp-manacher-kmp算法">Robin-karp, manacher, KMP算法</h3>
+
+<p>其中kmp的模板可以看下面的：</p>
+
+<p>https://leetcode-cn.com/problems/shortest-palindrome/solution/zui-duan-hui-wen-chuan-by-leetcode-solution/</p>
+
+<p>关于c++，这种写法：</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">ViolentMatch</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span> <span class="n">s</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">p</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="kt">int</span> <span class="n">sLen</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+	<span class="kt">int</span> <span class="n">pLen</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
+ 
+	<span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	<span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	<span class="k">while</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">sLen</span> <span class="o">&amp;&amp;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">pLen</span><span class="p">)</span>
+	<span class="p">{</span>
+		<span class="k">if</span> <span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">p</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+		<span class="p">{</span>
+			<span class="c1">//①如果当前字符匹配成功（即S[i] == P[j]），则i++，j++    </span>
+			<span class="n">i</span><span class="o">++</span><span class="p">;</span>
+			<span class="n">j</span><span class="o">++</span><span class="p">;</span>
+		<span class="p">}</span>
+		<span class="k">else</span>
+		<span class="p">{</span>
+			<span class="c1">//②如果失配（即S[i]! = P[j]），令i = i - (j - 1)，j = 0    </span>
+			<span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+			<span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="c1">//匹配成功，返回模式串p在文本串s中的位置，否则返回-1</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">j</span> <span class="o">==</span> <span class="n">pLen</span><span class="p">)</span>
+		<span class="k">return</span> <span class="n">i</span> <span class="o">-</span> <span class="n">j</span><span class="p">;</span>
+	<span class="k">else</span>
+		<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>kmp的next数组求法：</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">private</span> <span class="k">function</span> <span class="nf">getNext</span><span class="p">(</span><span class="nv">$word</span><span class="p">)</span><span class="o">:</span> <span class="k">array</span>
+<span class="p">{</span>
+    <span class="nv">$next</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+    <span class="nv">$len</span> <span class="o">=</span> <span class="nb">strlen</span><span class="p">(</span><span class="nv">$word</span><span class="p">);</span>
+    <span class="nv">$k</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="nv">$j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="nv">$j</span> <span class="o">&lt;</span> <span class="nv">$len</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$k</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="o">||</span> <span class="nv">$word</span><span class="p">[</span><span class="nv">$j</span><span class="p">]</span> <span class="o">==</span> <span class="nv">$word</span><span class="p">[</span><span class="nv">$k</span><span class="p">])</span> <span class="p">{</span>
+            <span class="nv">$next</span><span class="p">[</span><span class="o">++</span><span class="nv">$j</span><span class="p">]</span> <span class="o">=</span> <span class="o">++</span><span class="nv">$k</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nv">$k</span> <span class="o">=</span> <span class="nv">$next</span><span class="p">[</span><span class="nv">$k</span><span class="p">];</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+	<span class="k">return</span> <span class="nv">$next</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="有限状态自动机">有限状态自动机</h3>
+
+<p>确定有限状态自动机（以下简称「自动机」）是一类计算模型。它包含一系列状态，这些状态中：</p>
+
+<p>有一个特殊的状态，被称作「初始状态」。
+还有一系列状态被称为「接受状态」，它们组成了一个特殊的集合。其中，一个状态可能既是「初始状态」，也是「接受状态」。
+起初，这个自动机处于「初始状态」。随后，它顺序地读取字符串中的每一个字符，并根据当前状态和读入的字符，按照某个事先约定好的「转移规则」，从当前状态转移到下一个状态；当状态转移完成后，它就读取下一个字符。当字符串全部读取完毕后，如果自动机处于某个「接受状态」，则判定该字符串「被接受」；否则，判定该字符串「被拒绝」。</p>
+
+<p>如果输入的过程中某一步转移失败了，即不存在对应的「转移规则」，此时计算将提前中止。在这种情况下我们也判定该字符串「被拒绝」。</p>
+
+<p>https://leetcode-cn.com/problems/biao-shi-shu-zhi-de-zi-fu-chuan-lcof/</p>
+
+<p>这道题后面的有限自动学习机的代码很有意思，可以看一下。</p>
+
+<h3 id="顺序与派别">顺序与派别</h3>
+
+<p>比如1，2，3，4，5，6，从一开始。 其中:</p>
+
+<ul>
+  <li>1，2属于派系1.</li>
+  <li>3，4属于派系2</li>
+  <li>按照顺序划分，假设每个派系有k个元素，如何判断该元素属于什么派系？</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>--n;
+res = n/k + 1;
+</code></pre></div></div>
+
+<h3 id="反转链表">反转链表</h3>
+
+<p>pre代表前面的链的第一个节点，head代表后面的链的第一个节点，通过训练加一个head节点到pre节点前面，并且重新赋值。</p>
+
+<p>最后pre节点为头结点的链为反转之后的链。</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ListNode</span><span class="o">*</span> <span class="n">pre</span><span class="o">=</span><span class="nb">nullptr</span><span class="p">;</span>
+<span class="k">while</span><span class="p">(</span><span class="n">head</span><span class="p">){</span>
+    <span class="n">ListNode</span><span class="o">*</span> <span class="n">next</span> <span class="o">=</span> <span class="n">head</span><span class="p">.</span><span class="n">next</span><span class="p">;</span>
+    <span class="n">head</span><span class="p">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">pre</span><span class="p">;</span>
+    <span class="n">pre</span> <span class="o">=</span> <span class="n">head</span><span class="p">;</span>
+    <span class="n">head</span> <span class="o">=</span> <span class="n">next</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="位运算与幂运算">位运算与幂运算</h3>
+
+<p><a href="https://leetcode-cn.com/problems/shu-zhi-de-zheng-shu-ci-fang-lcof/">剑指 Offer 16. 数值的整数次方 LCOF</a></p>
+
+<p>这里面还有一个命题是关于int32的范围。</p>
+
+<p>-2147483648这个指数也很有意思呢，如果为了用移位取代除法来加速，负数是用补码表示的，补码的除法逻辑又不能用移位来解决…就需要取n的绝对值…因为int的取值范围是-2147483648到2147483647…所以java的Math.abs(n)在这个时候返回的还是-2147483648</p>
+
+<p>Java 代码中 int32 变量n∈[−2147483648,2147483647] ，因此当 n = -2147483648 时执行 n=−n 会因越界而赋值出错。解决方法是先将 n 存入 long 变量 b ，后面用 b 操作即可。</p>
+
+<h3 id="tips">tips:</h3>
+
+<h4 id="c定义堆中的比较规则">c++定义堆中的比较规则</h4>
+
+<p>优先队列的使用方式。</p>
+
+<p>priority_queue&lt;pair&lt;int, int&gt;, vector&lt;pair&lt;int, int», decltype(&amp;cmp)&gt; q(cmp);</p>
+
+<h4 id="java中关于堆的处理方式">java中关于堆的处理方式：</h4>
+
+<p>其中包括priorityqueue的poll与offer，map的遍历。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">int</span><span class="o">[]</span> <span class="nf">topKFrequent</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">nums</span><span class="o">,</span> <span class="kt">int</span> <span class="n">k</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">,</span> <span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">occurrences</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">HashMap</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">,</span> <span class="nc">Integer</span><span class="o">&gt;();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">num</span> <span class="o">:</span> <span class="n">nums</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">occurrences</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">num</span><span class="o">,</span> <span class="n">occurrences</span><span class="o">.</span><span class="na">getOrDefault</span><span class="o">(</span><span class="n">num</span><span class="o">,</span> <span class="mi">0</span><span class="o">)</span> <span class="o">+</span> <span class="mi">1</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="c1">// int[] 的第一个元素代表数组的值，第二个元素代表了该值出现的次数</span>
+        <span class="nc">PriorityQueue</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">[]&gt;</span> <span class="n">queue</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">PriorityQueue</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">[]&gt;(</span><span class="k">new</span> <span class="nc">Comparator</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">[]&gt;()</span> <span class="o">{</span>
+            <span class="kd">public</span> <span class="kt">int</span> <span class="nf">compare</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">m</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">n</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="n">m</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">-</span> <span class="n">n</span><span class="o">[</span><span class="mi">1</span><span class="o">];</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+        <span class="k">for</span> <span class="o">(</span><span class="nc">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">,</span> <span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">entry</span> <span class="o">:</span> <span class="n">occurrences</span><span class="o">.</span><span class="na">entrySet</span><span class="o">())</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="n">entry</span><span class="o">.</span><span class="na">getKey</span><span class="o">(),</span> <span class="n">count</span> <span class="o">=</span> <span class="n">entry</span><span class="o">.</span><span class="na">getValue</span><span class="o">();</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">queue</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="n">k</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">queue</span><span class="o">.</span><span class="na">peek</span><span class="o">()[</span><span class="mi">1</span><span class="o">]</span> <span class="o">&lt;</span> <span class="n">count</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">queue</span><span class="o">.</span><span class="na">poll</span><span class="o">();</span>
+                    <span class="n">queue</span><span class="o">.</span><span class="na">offer</span><span class="o">(</span><span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="n">num</span><span class="o">,</span> <span class="n">count</span><span class="o">});</span>
+                <span class="o">}</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="n">queue</span><span class="o">.</span><span class="na">offer</span><span class="o">(</span><span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="n">num</span><span class="o">,</span> <span class="n">count</span><span class="o">});</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="kt">int</span><span class="o">[]</span> <span class="n">ret</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">k</span><span class="o">];</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">k</span><span class="o">;</span> <span class="o">++</span><span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">ret</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="na">poll</span><span class="o">()[</span><span class="mi">0</span><span class="o">];</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">ret</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+:ET

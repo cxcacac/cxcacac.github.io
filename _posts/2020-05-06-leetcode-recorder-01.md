@@ -22,6 +22,8 @@ subtitle: Algorithm record:dynamic programming, sort
 
 **题目2：[排序数组](https://leetcode-cn.com/problems/sort-an-array/)**
 
+c++版本见github
+
 思路：经典排序
 
 主要对几种排序的思路进行梳理，只是初步的一个分析，后续会再次修改。
@@ -45,7 +47,7 @@ subtitle: Algorithm record:dynamic programming, sort
         return nums
   ```
 
-- **插入排序(Insertion Sort)**
+  **插入排序(Insertion Sort)**
 
   思路：从前往后逐渐排序，选取未排序的子序列的第一个元素移动插入到排序好的子序列中合适的位置。时间复杂度$O(n^2)$
 
