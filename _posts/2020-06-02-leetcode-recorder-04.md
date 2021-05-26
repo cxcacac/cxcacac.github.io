@@ -201,10 +201,3 @@ class Solution:
             return new # 返回root节点。
         return bfs(node)
 ```
-
-### 深度优先遍历DFS+图：[课程表](https://leetcode-cn.com/problems/course-schedule/)
-
-判断一个图中是否有环，可以用深度优先搜索的方式。
-
-设置一个状态量，如果在深度遍历过程中，发现状态量重合，则说明有环，否则将所有邻接节点遍历完，恢复状态变量。
-

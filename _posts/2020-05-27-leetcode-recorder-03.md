@@ -10,7 +10,9 @@ subtitle: Algorithm record:Topological Sorting, graph, state compression DP, BFS
 
 # 刷题记录-0527
 
-### 拓扑排序：[课程表 II](https://leetcode-cn.com/problems/course-schedule-ii/)
+### 拓扑排序：
+
+**题1：[课程表 II](https://leetcode-cn.com/problems/course-schedule-ii/)**
 
 思路：这里用到了贪心算法，对每个课程都有前馈课程，如果前馈课程都修完（数组非空），则可以把包含该课程的所有前馈课程列表都去除，如果所有课程都能学习，返回True。
 
@@ -26,8 +28,6 @@ subtitle: Algorithm record:Topological Sorting, graph, state compression DP, BFS
 2. 从图中删除该顶点和所有以它为起点的有向边。
 
 3. 重复 1 和 2 直到当前的 DAG 图为空或当前图中不存在无前驱的顶点为止。后一种情况说明有向图中必然存在环。
-
-python：
 
 ```python
 class Solution(object):
@@ -61,9 +61,9 @@ class Solution(object):
             return []
 ```
 
+### **状态压缩+动态规划**
 
-
-### **状态压缩动态规划**：[每个元音包含偶数次的最长子字符串](https://leetcode-cn.com/problems/find-the-longest-substring-containing-vowels-in-even-counts/)
+**题目：[每个元音包含偶数次的最长子字符串](https://leetcode-cn.com/problems/find-the-longest-substring-containing-vowels-in-even-counts/)**
 
 这个题的知识含量还是很多的，包括状态压缩，动态规划，位运算，前缀和和哈希。
 
@@ -111,15 +111,18 @@ class Solution:
 **2.Knuth-Morris-Pratt(KMP) algorithm**
 
 - 关于算法详解可以看这个博主的文章[KMP](https://blog.csdn.net/v_JULY_v/article/details/7041827)。
+
 - 其中$next[j]==k$指不包括$p[j]$的模式串中最大长度为$k$的相同前缀与后缀，再次匹配需要让$j = next[j]$以避免完全暴力回溯，所以让模式串右移$j-next[j]$，从而使前面的部分继续匹配。
+
 - 该方法的$next$数组指明了模式串在失配后应该跳到哪个位置。
+
 - 在KMP算法中，重要的是求模式串$P$中的各个前缀后缀的最大公共元素表，之后就可以右移，初始值赋-1得到$next$数组，两个是一样的。前缀和后缀就是相当于字符串`z=xy`中x,y的组成，最大长度表也可以看该图。
 
-![image-20200520214010445](\image\image-20200520214010445.png)
+  ![image-20200520214010445](\image\image-20200520214010445.png)
 
+### 二分法
 
-
-### 二分法：[寻找两个正序数组的中位数](https://leetcode-cn.com/problems/median-of-two-sorted-arrays/)
+**题1：[寻找两个正序数组的中位数](https://leetcode-cn.com/problems/median-of-two-sorted-arrays/)**
 
 通用解法：二分求第K个最小值
 
@@ -128,8 +131,6 @@ class Solution:
 图来自[windliang](https://leetcode-cn.com/problems/median-of-two-sorted-arrays/solution/xiang-xi-tong-su-de-si-lu-fen-xi-duo-jie-fa-by-w-2/):
 
 ![1590310013(1)](\image\image-20200527159031001.jpg)
-
- python:
 
 ```python
     def findkmin(self, nums1, nums2, k):
@@ -154,7 +155,9 @@ class Solution:
             return self.findkmin(nums1, nums2[down+1:],k-half)
 ```
 
-### 广度优先搜索：[N叉树的最大深度](https://leetcode-cn.com/problems/maximum-depth-of-n-ary-tree/)
+### 树(BFS)
+
+**题1：[N叉树的最大深度](https://leetcode-cn.com/problems/maximum-depth-of-n-ary-tree/)**
 
 这个题不难，这里只是把广度优先搜索梳理一下。
 

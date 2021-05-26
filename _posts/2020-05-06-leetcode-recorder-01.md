@@ -4,33 +4,42 @@ title:  "leetcode algorithm-01"
 date:   2020-05-06
 categories: study
 tags: Leetcode, Sort
-subtitle: Algorithm record:dynamic programming, sort
+subtitle: dynamic programming, sort
 ---
 
+## 2020/05/06
 
-## -2020/05/06
-
-**题目1：[最低票价](https://leetcode-cn.com/problems/minimum-cost-for-tickets)**
-
-思路：动态规划，不同的是该题从后往前建立最优解。
+### **动态规划**
 
 动态规划的题思路：
 
 - 确定$dp[i][j][k]...$代表的含义，包括$i,j,k$代表的index是哪些部分。
-- 最小的结构是什么，该题中的最小结构是最后的部分，所以是从最小结构开始建立。
-- 状态转移方程是什么。该题是$dp[i] = min(cost[0]+dp[i+1], cost[1]+dp[i+7], cost[2]+dp[i+30])$。
+- 转化到当前状态的最优子结构是什么。
+- 状态转移方程是什么。
 
-**题目2：[排序数组](https://leetcode-cn.com/problems/sort-an-array/)**
+**题目1：[最低票价](https://leetcode-cn.com/problems/minimum-cost-for-tickets)**
 
-c++版本见github
+思路：动态规划，有两种思路。
 
-思路：经典排序
+（1）该题从后往前建立最优解，即dp[i]表示第i天开始玩的最低票价，且dp[last-day]=cost[0];
+
+状态转移方程为：dp[i] = min(cost[0]+dp[i+1], cost[1]+dp[i+7], cost[2]+dp[i+30])​
+
+（2）从前往后建立最优解，即dp[i]表示到第i天结束的最低票价，包括第i天需要通信证和第i天不需要通行证的情况。
+
+状态转移方程为：
+
+- 需要：dp[i] = min(dp[i - 1] + cost[0], dp[i - 7] + cost[1], dp[i - 30] + cost[2])
+
+- 不需要：dp[i] = dp[i - 1]；
+
+### 排序总结
 
 主要对几种排序的思路进行梳理，只是初步的一个分析，后续会再次修改。
 
-另外，对Bogo排序，珠排序，睡眠排序进行整理。
+注1：只有比较排序，才会有$\Omega(n \log n)$的限制。
 
-注：只有比较排序，才会有$\Omega(n \log n)$的限制。
+注2：c++版本见[github](https://github.com/cxcacac/Algorithms-implementation/tree/master/cpp_version/sort%20algorithm)。
 
 - **选择排序（Selection Sort）**
 
@@ -47,11 +56,9 @@ c++版本见github
         return nums
   ```
 
-  **插入排序(Insertion Sort)**
+- **插入排序(Insertion Sort)**
 
   思路：从前往后逐渐排序，选取未排序的子序列的第一个元素移动插入到排序好的子序列中合适的位置。时间复杂度$O(n^2)$
-
-  python:
 
   ```python
   def insert_sort(nums):

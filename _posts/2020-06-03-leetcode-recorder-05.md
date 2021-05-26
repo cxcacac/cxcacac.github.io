@@ -9,7 +9,9 @@ subtitle: Algorithm record:several graph algorithm.
 
 # 刷题记录-0603
 
-## 图的算法：[网络延迟时间](https://leetcode-cn.com/problems/network-delay-time/)
+### 图
+
+**题1：[网络延迟时间](https://leetcode-cn.com/problems/network-delay-time/)**
 
 注：该Blog参考博主[hncboy](https://leetcode-cn.com/u/hncboy/)，[网页链接](https://leetcode-cn.com/problems/network-delay-time/solution/java-shi-xian-dijkstra-floyd-bellman-ford-spfa-by-/)。
 
@@ -21,7 +23,9 @@ subtitle: Algorithm record:several graph algorithm.
 - Floyd-Warshall算法
 - SPFA算法
 
-### **深度优先遍历**
+### 总结
+
+**深度优先遍历**
 
 在深度遍历中，没有`visited`这一项，但是对图的权重加了个`relaxation`，其实就是一个比较，如果更改之后需要再更新，直到不能松弛为止，效率还是比较低的。时间复杂度应该是$O(n^n)$，带权图问题还是不要用深度优先遍历。
 
@@ -53,7 +57,7 @@ class Solution:
             return -1
 ```
 
-### **广度优先遍历**
+**广度优先遍历**
 
 ```python
 class Solution:
@@ -83,7 +87,7 @@ class Solution:
             return -1
 ```
 
-### **Dijkstra算法**
+**Dijkstra算法**
 
 建立源点集`S={start...}`，选取距离最小的顶点`k`加入到S中，以`k`为新考虑的节点，对k相连的节点进行权重的比较，如更新的距离值小于原来的距离值，则修改路径。重复这个步骤直到所有节点加入到`S`中。
 
@@ -152,7 +156,7 @@ class Solution {
 }
 ```
 
-### **Floyd算法**
+**Floyd算法**
 
 思路：动态规划算法，对任意两点`i,j`间的路径有两种子状态，直接从`i`到`j`和从`i-k-j`两种状态，所以可以遍历中间节点，来松弛更新`i`到`j`的路径。
 
@@ -196,7 +200,7 @@ class Solution {
 }
 ```
 
-### Bellman-ford算法
+**Bellman-ford算法**
 
 思路：对所有的边（节点）进行松弛，每次松弛都会得到一条最短路径，每次松弛`V-1`次，若可以无限松弛，则说明包含负环。
 
@@ -238,7 +242,7 @@ class Solution {
 }
 ```
 
-### SPFA算法(Moore-Bellman-Ford算法)
+**SPFA算法(Moore-Bellman-Ford算法)**
 
 思路：SPFA算法的基本思路与贝尔曼-福特算法相同，即每个节点都被用作用于松弛其相邻节点的备选节点。相较于贝尔曼-福特算法，SPFA算法的提升在于它并不盲目尝试所有节点，而是维护一个备选节点队列，并且仅有节点被松弛后才会放入队列中。整个流程不断重复直至没有节点可以被松弛。
 

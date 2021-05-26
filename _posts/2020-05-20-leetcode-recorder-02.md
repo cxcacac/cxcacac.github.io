@@ -10,7 +10,9 @@ subtitle: Algorithm record:ListNode, Tree, Recursion, Iteration
 
 # 刷题记录-0520
 
-### **链表题：[K个一组翻转链表](https://leetcode-cn.com/problems/reverse-nodes-in-k-group/)**
+### **链表题**
+
+**题1：[K个一组翻转链表](https://leetcode-cn.com/problems/reverse-nodes-in-k-group/)**
 
 **思路1：**通过快慢指针的思路，将链表用$start$和$end$指针截出来一段，将这一段进行$reverseList()$，为了保持位置不变性，需要记住要反转链表的前一个元素的位置$pre$和后一个元素的位置$next$，翻转完成后更新指针$start,end,pre,next$，而且这四个节点对应的位置是有关系的。
 
@@ -84,11 +86,11 @@ public Node reverseList(Node head){
 
 - 第一层循环
 
-![image-20200516161644040](\image\image-20200516161644040.png)
+  ![image-20200516161644040](\image\image-20200516161644040.png)
 
 - 第二层循环
 
-![image-20200516161904990](\image\image-20200516161904990.png)
+  ![image-20200516161904990](\image\image-20200516161904990.png)
 
 **思路2：**使用栈，将一定长度的链表存入栈中，之后从栈顶弹出即可。从这里也可以看出栈和数组的相似性，只不过作为存储的两种形式，一种是$index$访问，量化存储。一种是多了一个$ListNode.next$建立联系，便于进行插入和删除操作。
 
@@ -144,11 +146,11 @@ def reverseKGroup(self, head: ListNode, k: int) -> ListNode:
         return head
 ```
 
-### 贪心算法题:[买卖股票的最佳时机含手续费](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/)
+### 贪心算法题/动态规划
 
-有点类似于启发算法，引入成本的概念很有意思，待补充数学证明。
+**题1：[买卖股票的最佳时机含手续费](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/)**
 
-代码：
+思路：贪心算法，有点类似于启发算法，引入成本的概念很有意思，待补充数学证明。
 
 ```python
 def maxProfit(self, prices: List[int], fee: int) -> int:    
@@ -175,9 +177,7 @@ def maxProfit(self, prices: List[int], fee: int) -> int:
         return profit
 ```
 
-**思路2**：动态规划
-
-代码：
+**思路2**：动态规划，hold表示持有股票赚的钱，而cash表示当前不持有股票的钱。
 
 ```python
 def maxProfit(self, prices: List[int], fee: int) -> int:    
@@ -190,7 +190,13 @@ def maxProfit(self, prices: List[int], fee: int) -> int:
         return cash
 ```
 
-### 递归+树：[平衡二叉树](https://leetcode-cn.com/problems/balanced-binary-tree/)
+### 树-递归
+
+解法：递归和迭代。
+
+对于递归：最重要的就是明白当前函数应用于目标对象的目的是为了求什么，之后是否能够应用到与该目标对象有关系的，更小的目标对象。
+
+**题1：[平衡二叉树](https://leetcode-cn.com/problems/balanced-binary-tree/)**
 
 **思路1：**普通递归，自顶向下
 
@@ -226,15 +232,11 @@ class Solution:
         return max(left, right) + 1 if abs(left - right) < 2 else -1
 ```
 
-### 递归+树：[将有序数组转换为二叉搜索树](https://leetcode-cn.com/problems/convert-sorted-array-to-binary-search-tree/)
+**题2：[将有序数组转换为二叉搜索树](https://leetcode-cn.com/problems/convert-sorted-array-to-binary-search-tree/)**
 
 **思路1：**树是自上而下建立的，对平衡搜索二叉树而言，做中序遍历即可得到升序数组，根节点为数组中点，即$mid = (right+left)//2, root = TreeNode(nums[mid])$。由于二叉搜索树的左右子树也为搜索树，分治递归即可。
 
-tips: 
-
-对递归函数而言，最重要的就是明白当前函数应用于目标对象的目的是为了求什么，之后是否能够应用到与该目标对象有关系的，更小的目标对象。
-
-### 递归+树：[二叉树的所有路径](https://leetcode-cn.com/problems/binary-tree-paths/)
+**题3：[二叉树的所有路径](https://leetcode-cn.com/problems/binary-tree-paths/)**
 
 **思路：**递归
 
@@ -244,11 +246,11 @@ tips：
 
 ​    （2）其实递归函数就是作用于主结构->子结构->终止条件，返回值从终止条件->子结构->主结构。
 
-### **迭代+树：**[二叉树的中序遍历](https://leetcode-cn.com/problems/binary-tree-inorder-traversal/)
+### **树-迭代**
 
-**思路1：**递归，比较常规和简单。
+**题1：[二叉树的中序遍历](https://leetcode-cn.com/problems/binary-tree-inorder-traversal/)**
 
-**思路2：**栈+迭代。
+栈+迭代
 
 前序遍历迭代算法的伪代码：根->左->右
 
@@ -281,13 +283,17 @@ while p!= None or stack != None:
 return result
 ```
 
-### 拓扑排序：[课程表 II](https://leetcode-cn.com/problems/course-schedule-ii/)
+### 拓扑排序(BFS)
+
+**题1：[课程表 II](https://leetcode-cn.com/problems/course-schedule-ii/)**
 
 **思路1：**课程的关系是一个有向图，用到图的算法我还不是很熟悉，所以这里只进行算法的解释，参考[liweiwei](https://leetcode-cn.com/problems/course-schedule-ii/solution/tuo-bu-pai-xu-shen-du-you-xian-bian-li-python-dai-/)。
 
-首先是图的表示，这里采用邻近节点表示，即以该树为$ancestor$的所有$sucessors$所组成的集合。
+拓扑排序的题，解法也比较固定。
 
-除了邻接表之外，当前课程是否可修由当前的$prerequisite$的课程个数是否为0，用一个$in\_degree$数组表示，这里我一开始想的是prequisite做一个集合，其实作为条件判断，不用明确$prerequisite$是哪个，只需要知道个数就可以，这就是简化。
+- 首先是图的表示，这里采用邻接表，即以该树为$ancestor$的所有$sucessors$所组成的集合。
+- 除了邻接表之外，当前课程是否可修由当前的$prerequisite$的课程个数是否为0，用一个$in\_degree$数组表示，这里我一开始想的是prequisite做一个集合，其实作为条件判断，不用明确$prerequisite$是哪个，只需要知道个数就可以。
+- 之后进行中序遍历，满足条件的元素加入queue，更新successor的indegree，判断最后是否能够完成整个流程。
 
 python代码：
 
@@ -328,11 +334,9 @@ class Solution:
         return res
 ```
 
-**思路2：**深度优先搜索（Depth-First-Search），通过递归来判断有向图中是否有环，对当前的节点设置状态变量，如果在遍历的过程中发现该状态变量相等，即说明遍历到了同一个节点，否则没有遍历到同一个节点，对所有节点都采用这个递归过程。
+**思路2：**深度优先搜索（Depth-First-Search），通过递归来判断有向图中是否有环，对当前的节点设置状态变量，如果在遍历的过程中发现该状态变量相等，即说明遍历到了同一个节点，否则没有遍历到同一个节点，对所有节点都采用这个递归过程
 
-注：（访问限制）在类中，对属性的名称前加“__”，可以让内部属性不被外部访问，成为一个私有变量或者私有函数，无法在外界直接对类的信息进行修改，必须要调用类的内部函数，或者可以用"\_classname\_\_attributename"来直接访问。
-
-python:
+注：（访问限制）在python类中，对属性的名称前加“__”，可以让内部属性不被外部访问，成为一个私有变量或者私有函数，无法在外界直接对类的信息进行修改，必须要调用类的内部函数，或者可以用"\_classname\_\_attributename"来直接访问。
 
 ```python
 class Solution(object):
@@ -376,13 +380,15 @@ class Solution(object):
         return False
 ```
 
-### 动态规划：[乘积最大子数组](https://leetcode-cn.com/problems/maximum-product-subarray/)
+### 动态规划
+
+**题1：[乘积最大子数组](https://leetcode-cn.com/problems/maximum-product-subarray/)**
 
 **思路：**两个考虑（1）如果$nums[i]<0$，那么当前位置乘积最大值依赖于之前位置的乘积最小值，反之亦然。如果$nums[i]>0$那么当前位置乘积最大值依赖之前位置最大值，反之亦然。（2）当前的乘积是要延续之前的状态还是要重新选取。可以写出状态转移方程，同时记录最大值。
 
-$$imax = max(imax,imax*nums[i]),imin = min(imin,imin*nums[i])。$$
+保存两个状态变量imax, imin即可。
 
-python：
+状态转移方程：$max = max(imax,imax*nums[i]),imin = min(imin,imin*nums[i])$
 
 ```python
 class Solution:
