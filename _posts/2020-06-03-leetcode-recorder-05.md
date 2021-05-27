@@ -4,18 +4,18 @@ title:  "leetcode algorithm-05"
 date:   2020-06-03
 categories: study
 tags: Leetcode, graph algorithm
-subtitle: Algorithm record:several graph algorithm.
+subtitle: several graph algorithm.
 ---
 
 # 刷题记录-0603
 
-### 图
+### 图-总结
 
-**题1：[网络延迟时间](https://leetcode-cn.com/problems/network-delay-time/)**
+**题目：[网络延迟时间](https://leetcode-cn.com/problems/network-delay-time/)**
 
-注：该Blog参考博主[hncboy](https://leetcode-cn.com/u/hncboy/)，[网页链接](https://leetcode-cn.com/problems/network-delay-time/solution/java-shi-xian-dijkstra-floyd-bellman-ford-spfa-by-/)。
+https://leetcode-cn.com/problems/network-delay-time/solution/dirkdtra-by-happysnaker-vjii/
 
-这个网络延迟时间算是最短路径题的典型，这里对图的各种算法进行记录和python\java实现。包括：
+这个网络延迟时间算是最短路径题的典型，这里对图的各种算法进行记录和python\java实现，c++实现见github（补链接）。包括：
 
 - 深度优先遍历BFS+广度优先遍历DFS
 - Dijkstra算法
@@ -23,33 +23,54 @@ subtitle: Algorithm record:several graph algorithm.
 - Floyd-Warshall算法
 - SPFA算法
 
-### 总结
+首先是对算法的理解，在图算法上，一般都是建立邻接表和邻接矩阵，这一步骤在算法说明中省略。
+
+- 单源最短路径：深度优先
+
+  一般都是采用递归函数遍历节点，给一个curTime，如果curTime<distance[i]，那么就会更新邻接表的所有元素，并且一直递归，直到不能更新即可。
+
+  带有权值的图，对其进行深度遍历，不用加vis来判定是否访问，只要对权值进行relaxation就行，可能会一直更新，因此时间复杂度为O(n^n)。
+
+- 单源最短路径：广度优先
+
+  不同于递归的方式，采用BFS来修改所有可能会relaxation的元素，如果修改就加queue，不修改就不加。时间复杂度为O(n^n)。
+
+- 单源最短路径：Dijkstra
+
+  建立源点集`S={start...}`，选取距离最小的顶点`k`加入到S中，以`k`为新考虑的节点，对k相连的节点进行距离的比较，如更新的距离值小于原来的距离值，则修改路径。重复这个步骤直到所有节点加入到`S`中。
+
+  Dijkstra算法具有单向性，需要visited数组。因为贪心的思想，所以需要数学证明。如果存在负权值，Dijkstra无效。
+
+  Dijkstra算法可以采用堆优化，具体见github。
+
+  Dijkstra时间复杂度为O(n^2)，即每次对邻接节点进行修改。
+
+- 单源最短路径：Bellman-Ford算法
+
+- 单源最短路径：SPFA算法
+
+- 多源最短路径：Floyd算法
+
+  动态规划算法，对任意两点`i,j`间的路径有两种子状态，直接从`i`到`j`和从`i-k-j`两种状态，所以可以遍历中间节点，来松弛更新`i`到`j`的路径。
 
 **深度优先遍历**
-
-在深度遍历中，没有`visited`这一项，但是对图的权重加了个`relaxation`，其实就是一个比较，如果更改之后需要再更新，直到不能松弛为止，效率还是比较低的。时间复杂度应该是$O(n^n)$，带权图问题还是不要用深度优先遍历。
 
 ```python
 class Solution:
     def networkDelayTime(self, times: List[List[int]], N: int, K: int) -> int:
         adj = [[] for i in range(N+1)]
-        # 统计一层需要的最大时间。
-        # 如果访问过，需要一个relaxation。
         distance = [float('inf') for i in range(N+1)]
         distance[0] = 0
         for time in times:
             adj[time[0]].append([time[1],time[2]])
         
         def dfs(start, curtime):
-            # 
             if curtime >= distance[start]:
                 return 
             distance[start] = curtime
             # 如果最小时间更新了，那么后面的节点也要更新。
             for item in adj[start]:
-                # 这里还有回溯的思想。
                 dfs(item[0],curtime+item[1])
-                
         dfs(K,0)
         if max(distance) != float('inf'):
             return max(distance)
@@ -63,13 +84,11 @@ class Solution:
 class Solution:
     def networkDelayTime(self, times: List[List[int]], N: int, K: int) -> int:
         adj = [[] for i in range(N+1)]
-        # 统计一层需要的最大时间。
-        # 如果访问过，需要一个relaxation。
         distance = [float('inf') for i in range(N+1)]
         distance[0] = 0
         for time in times:
             adj[time[0]].append([time[1],time[2]])
-        
+            
         def bfs(start):
             distance[start] = 0
             queue = [start]
@@ -80,6 +99,7 @@ class Solution:
                         distance[node[0]] = distance[temp] + node[1]
                         queue.append(node[0])
                         # 如果没有更新，则无需再添加。
+        
         bfs(K)
         if max(distance) != float('inf'):
             return max(distance)
@@ -88,10 +108,6 @@ class Solution:
 ```
 
 **Dijkstra算法**
-
-建立源点集`S={start...}`，选取距离最小的顶点`k`加入到S中，以`k`为新考虑的节点，对k相连的节点进行权重的比较，如更新的距离值小于原来的距离值，则修改路径。重复这个步骤直到所有节点加入到`S`中。
-
-Dijkstra算法具有单向性，需要visited数组，而且需要数学证明。
 
 ```java
 class Solution {
@@ -157,8 +173,6 @@ class Solution {
 ```
 
 **Floyd算法**
-
-思路：动态规划算法，对任意两点`i,j`间的路径有两种子状态，直接从`i`到`j`和从`i-k-j`两种状态，所以可以遍历中间节点，来松弛更新`i`到`j`的路径。
 
 ```java
 class Solution {

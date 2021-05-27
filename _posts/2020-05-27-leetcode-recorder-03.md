@@ -87,7 +87,7 @@ class Solution:
 
 ### KMP算法
 
-关于算法详解可以看这个博主的文章[KMP](https://blog.csdn.net/v_JULY_v/article/details/7041827)，具体实现见github（补链接）。
+关于算法详解可以看这个博主的文章[KMP](https://blog.csdn.net/v_JULY_v/article/details/7041827)，具体实现见[github](https://github.com/cxcacac/Algorithms-implementation/blob/master/cpp_version/string%20algorithm/kmp.cpp)。
 
 问题的出发点即是：假设一个文本串S，一个模式串P，要查找P在S中的位置，应该怎么查找？
 
