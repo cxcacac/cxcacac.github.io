@@ -80,18 +80,6 @@ public Node reverseList(Node head){
 }
 ```
 
-示意图：
-
-注：图来自博主[yinhuanxu](https://blog.csdn.net/xyh269)，[参考链接1](https://blog.csdn.net/xyh269/article/details/70238501)。
-
-- 第一层循环
-
-  ![image-20200516161644040](\image\image-20200516161644040.png)
-
-- 第二层循环
-
-  ![image-20200516161904990](\image\image-20200516161904990.png)
-
 **思路2：**使用栈，将一定长度的链表存入栈中，之后从栈顶弹出即可。从这里也可以看出栈和数组的相似性，只不过作为存储的两种形式，一种是$index$访问，量化存储。一种是多了一个$ListNode.next$建立联系，便于进行插入和删除操作。
 
 代码：
